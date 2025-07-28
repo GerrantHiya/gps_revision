@@ -1,0 +1,20 @@
+.hover-float {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.hover-float:hover {
+    text-decoration: none;
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}
+
+.scrollable-div {
+    max-height: 300px;
+    /* atau atur tinggi sesuai kebutuhan */
+    overflow-y: auto;
+    /* bikin scroll Y aktif */
+    overflow-x: hidden;
+}
