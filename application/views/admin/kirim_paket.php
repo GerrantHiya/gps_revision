@@ -179,7 +179,7 @@
             </div>
             <div class="modal-body">
 
-                <p class="text-dark">Menambah customer baru hanya dapat dilakukan secara mandiri oleh bersangkutan melalui <a href="<?= base_url('customer/registrasi') ?>">Link ini.</a></p>
+                <p class="text-dark">Menambah customer baru hanya dapat dilakukan secara mandiri oleh bersangkutan melalui <a href="<?= base_url('customer/reg-by-admin') ?>">Link ini.</a></p>
 
             </div>
             <div class="modal-footer">

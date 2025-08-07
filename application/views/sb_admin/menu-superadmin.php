@@ -3,6 +3,13 @@
     Admin
 </div>
 
+<!-- Nav Item - New Customer -->
+<li class="<?= ($title == 'Customer Registration') ? 'active' : '' ?> nav-item">
+    <a class="nav-link" href="<?= base_url('customer/reg-by-admin') ?>">
+        <i class="fas fa-fw fa-user"></i>
+        <span>Tambah Customer</span></a>
+</li>
+
 <!-- Nav Item - Kirim -->
 <li class="<?= ($title == 'Kirim Paket') ? 'active' : '' ?> nav-item">
     <a class="nav-link" href="<?= base_url('superadmin/kirim-paket') ?>">
@@ -41,7 +48,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="<?= base_url('superadmin/harga-bobot') ?>">Harga per KG</a>
                 <a class="collapse-item" href="<?= base_url('superadmin/harga-jarak') ?>">Harga per KM</a>
-                <a class="collapse-item" href="<?= base_url('superadmin/harga-volume') ?>">Harga per Volume</a>
+                <!-- <a class="collapse-item" href="<?= base_url('superadmin/harga-volume') ?>">Harga per Volume</a> -->
                 <a class="collapse-item" href="<?= base_url('superadmin/harga-kategori') ?>">Kategori Paket</a>
                 <a class="collapse-item" href="<?= base_url('superadmin/kelola-armada') ?>">Kelola Armada</a>
                 <a class="collapse-item" href="<?= base_url('superadmin/kelola-tipe-kurir') ?>">Tipe Kurir</a>

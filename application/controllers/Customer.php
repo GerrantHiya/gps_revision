@@ -92,7 +92,36 @@ class Customer extends MY_Controller
             'title' => 'Customer Registration',
         ];
 
-        $this->load->view('customer/register-by-admin', $data);
+        $this->form_validation->set_rules('ID', 'ID Card Number', 'required|trim|is_unique[customer.ID]');
+        $this->form_validation->set_rules('NamaLengkap', 'Full Name', 'required|trim');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim|is_unique[customer.email]|is_unique[superadmin.email]');
+        $this->form_validation->set_rules('no_telp', 'Phone Number', 'required|trim');
+
+        if ($this->form_validation->run() === false) {
+            $this->load_template('customer/register-by-admin', $data);
+        } else {
+            $NIK = $this->input->post('ID');
+            $NamaLengkap = $this->input->post('NamaLengkap');
+            $email = $this->input->post('email');
+            $no_telp = $this->input->post('no_telp');
+
+            $data_insert = [
+                'NamaLengkap' => $NamaLengkap,
+                'ID' => $NIK,
+                'email' => $email,
+                'no_telp' => $no_telp,
+                'password' => password_hash($email, PASSWORD_BCRYPT),
+                'active' => '1',
+            ];
+
+            if ($this->db->insert('customer', $data_insert)) {
+                $this->session->set_flashdata('message-success', 'Berhasil disimpan, Akun Aktif');
+                redirect('customer/reg-by-admin');
+            } else {
+                $this->session->set_flashdata('error', 'Gagal proses');
+                redirect('customer/reg-by-admin');
+            }
+        }
     }
 
     public function index()
