@@ -107,6 +107,8 @@ $route['superadmin/kelola-metode-bayar'] = 'superadmin/metode_bayar_view';
 
 $route['superadmin/monthly-report'] = 'superadmin/monthly_report';
 
+$route['superadmin/admin-account-management'] = 'superadmin/admin_account_management';
+
 /**
  * ==============================================================================================
  * ==============================================================================================

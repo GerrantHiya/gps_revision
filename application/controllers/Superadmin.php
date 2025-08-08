@@ -987,4 +987,23 @@ class Superadmin extends MY_Controller
 
         $this->load_template('superadmin/monthly_report', $data);
     }
+
+    public function admin_account_management($offset = 0)
+    {
+        $data = [
+            'title' => 'Admin Account Management',
+            'accs' => $this->Superadmin_Model->all_admin(),
+        ];
+
+        $config = $this->pagination_config;
+        $config['base_url'] = base_url('superadmin/admin-account-management');
+        $config['per_page'] = $this->per_page;
+        $config['total_rows'] = count($this->Superadmin_Model->get_tipekurir());
+
+        $this->pagination->initialize($config);
+
+        $data['pages'] = $this->pagination->create_links();
+
+        $this->load_template('superadmin/akun_admin', $data);
+    }
 }

@@ -7,7 +7,7 @@
 <li class="<?= ($title == 'Customer Registration') ? 'active' : '' ?> nav-item">
     <a class="nav-link" href="<?= base_url('customer/reg-by-admin') ?>">
         <i class="fas fa-fw fa-user"></i>
-        <span>Tambah Customer</span></a>
+        <span>Tambah Customer [NEW]</span></a>
 </li>
 
 <!-- Nav Item - Kirim -->
@@ -74,6 +74,13 @@
                 <a class="collapse-item" href="<?= base_url('') ?>"></a>
             </div>
         </div>
+    </li>
+
+    <!-- Nav Item - New Admin -->
+    <li class="<?= ($title == 'Admin Account Management') ? 'active' : '' ?> nav-item">
+        <a class="nav-link" href="<?= base_url('superadmin/admin-account-management') ?>">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Admin Accounts [NEW]</span></a>
     </li>
 
 <?php } ?>

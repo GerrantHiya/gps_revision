@@ -3,6 +3,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Superadmin_Model extends CI_Model
 {
+    public function all_admin($limit = null, $offset = null)
+    {
+        $this->db->select('*');
+        $this->db->from('superadmin');
+        $this->db->where('is_super', null);
+        $this->db->or_where('is_super', '0');
+
+        if ($limit !== null && $offset !== null) {
+            $this->db->limit($limit, $offset);
+        }
+
+        return $this->db->get()->result_array();
+    }
+
     public function get_superadmin($id = "") # ambil data user (semua atau tertentu)
     {
         $this->db->from('superadmin');
