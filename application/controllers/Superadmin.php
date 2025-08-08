@@ -992,7 +992,7 @@ class Superadmin extends MY_Controller
     {
         $data = [
             'title' => 'Admin Account Management',
-            'accs' => $this->Superadmin_Model->all_admin(),
+            'accs' => $this->Superadmin_Model->all_admin($offset),
         ];
 
         $config = $this->pagination_config;
@@ -1004,6 +1004,35 @@ class Superadmin extends MY_Controller
 
         $data['pages'] = $this->pagination->create_links();
 
-        $this->load_template('superadmin/akun_admin', $data);
+        $this->form_validation->set_rules('NamaLengkap', 'Full Name', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim|is_unique[customer.email]|is_unique[superadmin.email]');
+
+        if ($this->form_validation->run() === false) {
+            $this->load_template('superadmin/akun_admin', $data);
+        } else {
+            $this->_new_admin();
+        }
+    }
+
+    private function _new_admin()
+    {
+        $NamaLengkap = $this->input->post('NamaLengkap');
+        $email = $this->input->post('email');
+        $password = password_hash($email, PASSWORD_BCRYPT);
+
+        $data_insert = [
+            'NamaLengkap' => $NamaLengkap,
+            'email' => $email,
+            'password' => $password,
+            'is_super' => '0',
+        ];
+
+        if ($this->Superadmin_Model->new_admin($data_insert)) {
+            $this->session->set_flashdata('success', 'Berhasil simpan data.');
+            redirect('superadmin/admin-account-management');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal simpan data.');
+            redirect('superadmin/admin-account-management');
+        }
     }
 }

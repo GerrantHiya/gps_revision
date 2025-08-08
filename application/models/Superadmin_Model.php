@@ -17,6 +17,17 @@ class Superadmin_Model extends CI_Model
         return $this->db->get()->result_array();
     }
 
+    public function new_admin($data)
+    {
+        $this->db->insert('superadmin', $data);
+
+        if ($this->General_Model->aff_row() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function get_superadmin($id = "") # ambil data user (semua atau tertentu)
     {
         $this->db->from('superadmin');
