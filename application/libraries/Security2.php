@@ -5,7 +5,8 @@ class Security2
 {
     function generate_activation_key($email)
     {
-        $secret = 'gerrant_glenda_071218'; // Ganti dengan secret kamu (harus dijaga kerahasiaannya)
+        // $secret = 'gerrant_glenda_071218'; // Ganti dengan secret kamu (harus dijaga kerahasiaannya)
+        $secret = 'abcxyz'; // Ganti dengan secret kamu (harus dijaga kerahasiaannya)
 
         $raw = $email . $secret;
 
