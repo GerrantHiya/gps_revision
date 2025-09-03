@@ -321,6 +321,7 @@ class Superadmin_Model extends CI_Model
         } else if (!empty($blm_tiba)) {
             // hanya tampilkan yang belum tiba
             $this->db->where('pengiriman.received_date IS NULL');
+            $this->db->where('pengiriman.hilang = 0');
         }
 
         $this->db->order_by('pengiriman.ID', 'asc');
@@ -406,6 +407,7 @@ class Superadmin_Model extends CI_Model
         $this->db->select('COUNT(*) AS hasil');
         $this->db->from('pengiriman');
         $this->db->where('received_date', null);
+        $this->db->where('hilang', '0');
 
         return $this->db->get()->row_array();
     }
@@ -484,7 +486,7 @@ class Superadmin_Model extends CI_Model
         }
     }
 
-    public function update_armada_kirim($id_pengiriman, $id_armada)
+    public function update_armada_kirim($id_pengiriman = '', $id_armada = '')
     {
         $set = ['armada_ID' => $id_armada];
         $condition = ['ID' => $id_pengiriman];
@@ -497,12 +499,28 @@ class Superadmin_Model extends CI_Model
         }
     }
 
-    public function update_status_kirim($id_kirim)
+    public function update_status_kirim($id_kirim = '')
     {
         $set = [
             'received_date' => date('Y-m-d'),
         ];
         $condition = ['ID' => $id_kirim];
+        $this->db->update('pengiriman', $set, $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function update_hilang($id_kirim = '')
+    {
+        $condition = ['ID' => $id_kirim];
+        $set = [
+            'hilang' => 1
+        ];
+
         $this->db->update('pengiriman', $set, $condition);
 
         if ($this->General_Model->aff_row() > 0) {

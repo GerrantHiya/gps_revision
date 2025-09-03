@@ -108,4 +108,16 @@
         </div>
     </div>
 
+    <div class="row">
+        <div class="col"></div>
+        <div class="col"></div>
+        <div class="col text-right">
+            <?php if ($this->session->flashdata('pin')) : ?>
+                <div class="alert alert-success">
+                    <?= $this->session->flashdata('pin'); ?>
+                </div>
+            <?php endif; ?>
+            <a href="<?= base_url('superadmin/generate_PIN_hilang') ?>" class="btn btn-danger">generate PIN</a>
+        </div>
+    </div>
 <?php } ?>

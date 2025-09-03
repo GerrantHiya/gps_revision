@@ -110,6 +110,7 @@ $route['superadmin/monthly-report'] = 'superadmin/monthly_report';
 $route['superadmin/admin-account-management'] = 'superadmin/admin_account_management';
 
 $route['superadmin/terima-kargo'] = 'superadmin/terima_kargo';
+$route['superadmin/kargo-hilang'] = 'superadmin/kargo_hilang';
 
 /**
  * ==============================================================================================

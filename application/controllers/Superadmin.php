@@ -1059,4 +1059,61 @@ class Superadmin extends MY_Controller
             }
         }
     }
+
+    public function kargo_hilang()
+    {
+        $data = [
+            'title' => 'Kargo Hilang',
+            'data_kirim' => $this->Superadmin_Model->get_kargo_all($blm_bayar = null, $blm_tiba = '1'),
+        ];
+
+        $this->form_validation->set_rules('no_resi', 'Nomor Resi', 'required');
+        $this->form_validation->set_rules('PIN', 'PIN', 'required');
+
+        if ($this->form_validation->run() === false) {
+            $this->load_template('admin/kargo_hilang', $data);
+        } else {
+            $noresi = $this->input->post('no_resi');
+            $pin = $this->input->post('PIN');
+
+            /** TAHAP
+             * 1. Cek PIN -> GENERATE SUPERADMIN
+             * 2. UPDATE
+             */
+
+            if ($this->General_Model->check_pin($pin) == true) {
+                if ($this->Superadmin_Model->update_hilang($noresi) == true) {
+                    $this->session->set_flashdata('succ', 'Berhasil Ubah Status: HILANG');
+                } else {
+                    $this->session->set_flashdata('error', 'Gagal Ubah Status: HILANG');
+                }
+            } else {
+                $this->session->set_flashdata('error', 'PIN salah');
+            }
+            redirect('superadmin/kargo-hilang');
+        }
+    }
+
+    public function generate_PIN_hilang()
+    {
+        $last = $this->General_Model->get_pin();
+
+        if (empty($last)) { # tidak ada hasil / pin belum ada
+            $pin = rand(0, 999999);
+
+            $data = [
+                'pin' => $pin,
+                'created_at' => date('Y-m-d'),
+            ];
+
+            $this->db->insert('auth_pin', $data);
+        } else {
+            $pin = $last['pin'];
+        }
+
+        $statement = 'PIN: ' . $pin;
+
+        $this->session->set_flashdata('pin', $statement);
+        redirect('superadmin/');
+    }
 }

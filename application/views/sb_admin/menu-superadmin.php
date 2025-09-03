@@ -38,6 +38,13 @@
         <span>Terima Kargo [NEW]</span></a>
 </li>
 
+<!-- Nav Item - Kargo Hilang -->
+<li class="<?= ($title == 'Kargo Hilang') ? 'active' : '' ?> nav-item">
+    <a class="nav-link" href="<?= base_url('superadmin/kargo-hilang') ?>">
+        <i class="fas fa-fw fa-circle text-danger"></i>
+        <span>Kargo Hilang [NEW]</span></a>
+</li>
+
 <?php if ($this->session->userdata('user')['is_super'] == 1) { ?>
     <hr class="sidebar-divider d-none d-md-block">
 
