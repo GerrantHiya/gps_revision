@@ -109,6 +109,8 @@ $route['superadmin/monthly-report'] = 'superadmin/monthly_report';
 
 $route['superadmin/admin-account-management'] = 'superadmin/admin_account_management';
 
+$route['superadmin/terima-kargo'] = 'superadmin/terima_kargo';
+
 /**
  * ==============================================================================================
  * ==============================================================================================
@@ -149,5 +151,5 @@ $route['auth/verify/(:any)/(:any)'] = 'auth/verification/$1/$2';
  * ==============================================================================================
  */
 
-$route['Iot/update/(:any)'] = 'Iot/update/$1';
-$route['Iot/update/(:any)/(:any)/(:any)'] = 'Iot/update/$1/$2/$3';
+$route['iot/update/(:any)'] = 'Iot/update_loc/$1';
+$route['iot/update/(:any)/(:any)/(:any)'] = 'Iot/update_loc/$1/$2/$3';

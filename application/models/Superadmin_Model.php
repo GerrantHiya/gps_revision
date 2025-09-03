@@ -289,7 +289,7 @@ class Superadmin_Model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function get_kargo_all($blm_bayar = '')
+    public function get_kargo_all($blm_bayar = '', $blm_tiba = '')
     {
         $this->db->select(
             'pengiriman.ID AS no_resi, ' .
@@ -318,6 +318,9 @@ class Superadmin_Model extends CI_Model
             $this->db->where('bayar.total_bayar < pengiriman.harga_total');
             $this->db->or_where('bayar.total_bayar IS NULL'); // belum dibayar sama sekali
             $this->db->group_end();
+        } else if (!empty($blm_tiba)) {
+            // hanya tampilkan yang belum tiba
+            $this->db->where('pengiriman.received_date IS NULL');
         }
 
         $this->db->order_by('pengiriman.ID', 'asc');
@@ -362,19 +365,6 @@ class Superadmin_Model extends CI_Model
         $this->db->order_by('pengiriman.ID', 'asc');
 
         return $this->db->get()->row_array();
-    }
-
-    public function update_armada_kirim($id_pengiriman, $id_armada)
-    {
-        $set = ['armada_ID' => $id_armada];
-        $condition = ['ID' => $id_pengiriman];
-        $this->db->update('pengiriman', $set, $condition);
-
-        if ($this->General_Model->aff_row() > 0) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public function get_tipekurir($limit = null, $offset = null)
@@ -491,6 +481,34 @@ class Superadmin_Model extends CI_Model
             $this->db->order_by('tahun', 'desc');
 
             return $this->db->get()->result_array();
+        }
+    }
+
+    public function update_armada_kirim($id_pengiriman, $id_armada)
+    {
+        $set = ['armada_ID' => $id_armada];
+        $condition = ['ID' => $id_pengiriman];
+        $this->db->update('pengiriman', $set, $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function update_status_kirim($id_kirim)
+    {
+        $set = [
+            'received_date' => date('Y-m-d'),
+        ];
+        $condition = ['ID' => $id_kirim];
+        $this->db->update('pengiriman', $set, $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

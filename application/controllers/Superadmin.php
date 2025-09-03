@@ -1035,4 +1035,28 @@ class Superadmin extends MY_Controller
             redirect('superadmin/admin-account-management');
         }
     }
+
+    public function terima_kargo()
+    {
+        $data = [
+            'title' => 'Terima Kargo',
+            'data_kirim' => $this->Superadmin_Model->get_kargo_all($blm_bayar = null, $blm_tiba = '1'),
+        ];
+
+        $this->form_validation->set_rules('no_resi', 'Nomor Resi', 'required');
+
+        if ($this->form_validation->run() === false) {
+            $this->load_template('admin/terima_kargo', $data);
+        } else {
+            $noresi = $this->input->post('no_resi');
+
+            if ($this->Superadmin_Model->update_status_kirim($noresi)) {
+                $this->session->set_flashdata('succ', 'Berhasil Mengubah Status Kargo');
+                redirect('superadmin/terima-kargo');
+            } else {
+                $this->session->set_flashdata('error', 'Gagal Mengubah Status Kargo');
+                redirect('superadmin/terima-kargo');
+            }
+        }
+    }
 }

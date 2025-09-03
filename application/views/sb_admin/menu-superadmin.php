@@ -7,7 +7,7 @@
 <li class="<?= ($title == 'Customer Registration') ? 'active' : '' ?> nav-item">
     <a class="nav-link" href="<?= base_url('customer/reg-by-admin') ?>">
         <i class="fas fa-fw fa-user"></i>
-        <span>Tambah Customer [NEW]</span></a>
+        <span>Tambah Customer</span></a>
 </li>
 
 <!-- Nav Item - Kirim -->
@@ -29,6 +29,13 @@
     <a class="nav-link" href="<?= base_url('superadmin/bayar') ?>">
         <i class="fas fa-fw fa-money-bill"></i>
         <span>Pembayaran</span></a>
+</li>
+
+<!-- Nav Item - Terima Kargo -->
+<li class="<?= ($title == 'Terima Kargo') ? 'active' : '' ?> nav-item">
+    <a class="nav-link" href="<?= base_url('superadmin/terima-kargo') ?>">
+        <i class="fas fa-fw fa-boxes"></i>
+        <span>Terima Kargo [NEW]</span></a>
 </li>
 
 <?php if ($this->session->userdata('user')['is_super'] == 1) { ?>
@@ -80,7 +87,7 @@
     <li class="<?= ($title == 'Admin Account Management') ? 'active' : '' ?> nav-item">
         <a class="nav-link" href="<?= base_url('superadmin/admin-account-management') ?>">
             <i class="fas fa-fw fa-users"></i>
-            <span>Admin Accounts [NEW]</span></a>
+            <span>Admin Accounts</span></a>
     </li>
 
 <?php } ?>
