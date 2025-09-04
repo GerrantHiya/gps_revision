@@ -1040,7 +1040,7 @@ class Superadmin extends MY_Controller
     {
         $data = [
             'title' => 'Terima Kargo',
-            'data_kirim' => $this->Superadmin_Model->get_kargo_all($blm_bayar = null, $blm_tiba = '1'),
+            'data_kirim' => $this->Superadmin_Model->get_kargo_all($blm_bayar = null, $blm_tiba = '1', $armada_assigned = '1'),
         ];
 
         $this->form_validation->set_rules('no_resi', 'Nomor Resi', 'required');

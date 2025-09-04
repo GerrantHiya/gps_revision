@@ -290,7 +290,7 @@ class Superadmin_Model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function get_kargo_all($blm_bayar = '', $blm_tiba = '')
+    public function get_kargo_all($blm_bayar = '', $blm_tiba = '', $armada_assigned = '')
     {
         $this->db->select(
             'pengiriman.ID AS no_resi, ' .
@@ -319,10 +319,17 @@ class Superadmin_Model extends CI_Model
             $this->db->where('bayar.total_bayar < pengiriman.harga_total');
             $this->db->or_where('bayar.total_bayar IS NULL'); // belum dibayar sama sekali
             $this->db->group_end();
-        } else if (!empty($blm_tiba)) {
+        }
+
+        if (!empty($blm_tiba)) {
             // hanya tampilkan yang belum tiba
             $this->db->where('pengiriman.received_date IS NULL');
             $this->db->where('pengiriman.hilang = 0');
+        }
+
+        if (!empty($armada_assigned)) {
+            // hanya tampilkan yang sudah di assign proses armada
+            $this->db->where('pengiriman.armada_ID IS NOT NULL');
         }
 
         $this->db->order_by('pengiriman.ID', 'asc');
