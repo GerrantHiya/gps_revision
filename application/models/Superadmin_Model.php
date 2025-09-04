@@ -269,6 +269,7 @@ class Superadmin_Model extends CI_Model
         $this->db->join('tipe_kurir', 'tipe_kurir.ID = pengiriman.tipe_kurir', 'left');
 
         $this->db->where('pengiriman.received_date', null);
+        $this->db->where('pengiriman.hilang', '0');
 
         if (!empty($id_armada_md5)) {
             $this->db->where('md5(pengiriman.armada_ID)', $id_armada_md5);
