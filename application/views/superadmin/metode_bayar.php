@@ -87,7 +87,7 @@
                         <td><?= $metode['bank'] ?? '-- tanpa bank --' ?></td>
                         <td>
                             <a href="" class="badge badge-warning text-danger">edit</a>
-                            <a href="" class="badge badge-danger">delete</a>
+                            <a href="<?= base_url('superadmin/kelola-metode-bayar/hapus/' . md5($metode['ID'])) ?>" class="badge badge-danger">delete</a>
                         </td> <!-- Button -->
                     </tr>
                 <?php endforeach; ?>

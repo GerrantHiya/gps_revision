@@ -81,7 +81,7 @@
                         <td class="">Rp.<?= $tipekurir['biaya_formatted'] ?></td> <!-- Harga -->
                         <td class="">
                             <a href="" class="badge badge-warning text-danger">edit</a>
-                            <a href="" class="badge badge-danger">delete</a>
+                            <a href="<?= base_url('superadmin/kelola-tipe-kurir/hapus/' . md5($tipekurir['ID'])) ?>" class="badge badge-danger">delete</a>
                         </td> <!-- Button -->
                     </tr>
                 <?php endforeach; ?>

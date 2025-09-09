@@ -76,7 +76,7 @@
                         <td>Rp.<?= $kategori['harga_formatted'] ?></td>
                         <td>
                             <a href="" class="badge badge-warning text-danger">edit</a>
-                            <a href="" class="badge badge-danger">delete</a>
+                            <a href="<?= base_url('superadmin/harga-kategori/hapus/' . md5($kategori['ID'])) ?>" class="badge badge-danger">delete</a>
                         </td>
                     </tr>
                 <?php } ?>

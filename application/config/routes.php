@@ -75,18 +75,22 @@ $route['superadmin/proses-kirim/(:num)'] = 'superadmin/prosesKirim_pArmada/$1';
 
 $route['superadmin/harga-bobot'] = 'superadmin/harga_per_kg';
 $route['superadmin/harga-bobot/(:num)'] = 'superadmin/harga_per_kg/$1';
+$route['superadmin/harga-bobot/hapus/(:any)'] = 'superadmin/hapus_harga_kg/$1';
 
 $route['superadmin/harga-jarak'] = 'superadmin/harga_per_km';
 $route['superadmin/harga-jarak/(:num)'] = 'superadmin/harga_per_km/$1';
+$route['superadmin/harga-jarak/hapus/(:any)'] = 'superadmin/hapus_harga_km/$1';
 
 $route['superadmin/harga-kategori'] = 'superadmin/kategori_view';
 $route['superadmin/harga-kategori/(:num)'] = 'superadmin/kategori_view/$1';
+$route['superadmin/harga-kategori/hapus/(:any)'] = 'superadmin/hapus_kategori/$1';
 
 // $route['superadmin/harga-volume'] = 'superadmin/harga_per_volume';
 // $route['superadmin/harga-volume/(:num)'] = 'superadmin/harga_per_volume/$1';
 
 $route['superadmin/kelola-armada'] = 'superadmin/kelola_armada_view';
 $route['superadmin/kelola-armada/(:num)'] = 'superadmin/kelola_armada_view/$1';
+$route['superadmin/kelola-armada/hapus/(:any)'] = 'superadmin/hapus_armada/$1';
 
 $route['superadmin/kelola-armada/detail/(:any)'] = 'superadmin/lacak_armada_view/$1';
 
@@ -97,6 +101,7 @@ $route['superadmin/kontrak-sopir/edit/(:any)'] = 'superadmin/kontrak_sopir_edit_
 $route['superadmin/kontrak-sopir/daftar/(:any)'] = 'superadmin/kontrak_sopir_detail_view/$1';
 
 $route['superadmin/kelola-tipe-kurir'] = 'superadmin/kelola_tipe_kurir';
+$route['superadmin/kelola-tipe-kurir/hapus/(:any)'] = 'superadmin/hapus_tipe_kurir/$1';
 
 $route['superadmin/bayar'] = 'superadmin/bayar_view';
 $route['superadmin/bayar/cetak/(:any)'] = 'superadmin/cetak_invoice/$1';
@@ -104,6 +109,7 @@ $route['superadmin/get_data_pengiriman'] = 'superadmin/get_data_pengiriman';
 $route['superadmin/get_detail_pengiriman'] = 'superadmin/get_detail_pengiriman';
 
 $route['superadmin/kelola-metode-bayar'] = 'superadmin/metode_bayar_view';
+$route['superadmin/kelola-metode-bayar/hapus/(:any)'] = 'superadmin/hapus_metode_bayar/$1';
 
 $route['superadmin/monthly-report'] = 'superadmin/monthly_report';
 

@@ -1116,4 +1116,94 @@ class Superadmin extends MY_Controller
         $this->session->set_flashdata('pin', $statement);
         redirect('superadmin/');
     }
+
+    public function hapus_harga_km($id = '')
+    {
+        $condition = [
+            'md5(ID)' => $id,
+        ];
+        $this->db->delete('golongan_jarak', $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            $this->session->set_flashdata('succ', 'Berhasil');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal, mohon coba lagi');
+        }
+        redirect('superadmin/harga-jarak');
+    }
+
+    public function hapus_harga_kg($id = '')
+    {
+        $condition = [
+            'md5(ID)' => $id,
+        ];
+        $this->db->delete('golongan_bobot', $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            $this->session->set_flashdata('succ', 'Berhasil');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal, mohon coba lagi');
+        }
+        redirect('superadmin/harga-bobot');
+    }
+
+    public function hapus_kategori($id = '')
+    {
+        $condition = [
+            'md5(ID)' => $id,
+        ];
+        $this->db->delete('kategori_paket', $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            $this->session->set_flashdata('succ', 'Berhasil');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal, mohon coba lagi');
+        }
+        redirect('superadmin/harga-kategori');
+    }
+
+    public function hapus_armada($id = '')
+    {
+        $condition = [
+            'md5(ID)' => $id,
+        ];
+        $this->db->delete('armada', $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            $this->session->set_flashdata('succ', 'Berhasil');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal, mohon coba lagi');
+        }
+        redirect('superadmin/kelola-armada');
+    }
+
+    public function hapus_tipe_kurir($id = '')
+    {
+        $condition = [
+            'md5(ID)' => $id,
+        ];
+        $this->db->delete('tipe_kurir', $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            $this->session->set_flashdata('succ', 'Berhasil');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal, mohon coba lagi');
+        }
+        redirect('superadmin/kelola-tipe-kurir');
+    }
+
+    public function hapus_metode_bayar($id = '')
+    {
+        $condition = [
+            'md5(ID)' => $id,
+        ];
+        $this->db->delete('metode_pembayaran', $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            $this->session->set_flashdata('succ', 'Berhasil');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal, mohon coba lagi');
+        }
+        redirect('superadmin/kelola-metode-bayar');
+    }
 }

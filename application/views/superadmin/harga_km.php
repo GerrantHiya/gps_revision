@@ -1,5 +1,17 @@
 <div class="container">
 
+    <?php if ($this->session->flashdata('succ')) : ?>
+        <div class="alert alert-success mb-0 text-center rounded-0">
+            <?= $this->session->flashdata('succ'); ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($this->session->flashdata('message')) : ?>
+        <div class="alert alert-danger mb-0 text-center rounded-0">
+            <?= $this->session->flashdata('message'); ?>
+        </div>
+    <?php endif; ?>
+
     <!-- tombol trigger modal -->
     <button class="badge badge-primary border-0" data-toggle="modal" data-target="#tambah">
         + Tambah
@@ -16,12 +28,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-
-                    <?php if ($this->session->flashdata('message')) : ?>
-                        <div class="alert alert-danger mb-0 text-center rounded-0">
-                            <?= $this->session->flashdata('message'); ?>
-                        </div>
-                    <?php endif; ?>
 
                     <div class="row pt-3 mb-3">
                         <div class="col">
@@ -93,7 +99,7 @@
                         <td>Rp.<?= $harga['harga_formatted'] ?></td> <!-- Harga -->
                         <td class="col-2">
                             <a href="" class="badge badge-warning text-danger">edit</a>
-                            <a href="" class="badge badge-danger">delete</a>
+                            <a href="<?= base_url('superadmin/harga-jarak/hapus/' . md5($harga['ID'])) ?>" class="badge badge-danger">delete</a>
                         </td> <!-- Button -->
                     </tr>
                 <?php endforeach; ?>

@@ -95,26 +95,26 @@
 </body>
 
 <script>
-    // Fungsi untuk merefresh hanya konten div dengan id tertentu
-    function autoRefreshDiv() {
-        setInterval(() => {
-            // Lakukan permintaan fetch untuk memperbarui konten
-            fetch(window.location.href)
-                .then(response => response.text())
-                .then(data => {
-                    // Buat elemen DOM untuk mengambil ulang konten div
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(data, 'text/html');
-                    const newContent = doc.querySelector('#main'); // Ganti 'targetDiv' dengan id yang diinginkan
+    // // Fungsi untuk merefresh hanya konten div dengan id tertentu
+    // function autoRefreshDiv() {
+    //     setInterval(() => {
+    //         // Lakukan permintaan fetch untuk memperbarui konten
+    //         fetch(window.location.href)
+    //             .then(response => response.text())
+    //             .then(data => {
+    //                 // Buat elemen DOM untuk mengambil ulang konten div
+    //                 const parser = new DOMParser();
+    //                 const doc = parser.parseFromString(data, 'text/html');
+    //                 const newContent = doc.querySelector('#main'); // Ganti 'targetDiv' dengan id yang diinginkan
 
-                    // Perbarui div dengan konten baru
-                    document.querySelector('#main').innerHTML = newContent.innerHTML;
-                });
-        }, 5000); // 5000 ms = 5 detik
-    }
+    //                 // Perbarui div dengan konten baru
+    //                 document.querySelector('#main').innerHTML = newContent.innerHTML;
+    //             });
+    //     }, 5000); // 5000 ms = 5 detik
+    // }
 
-    // Panggil fungsi autoRefreshDiv saat halaman dimuat
-    window.onload = autoRefreshDiv;
+    // // Panggil fungsi autoRefreshDiv saat halaman dimuat
+    // window.onload = autoRefreshDiv;
 </script>
 
 </html>
