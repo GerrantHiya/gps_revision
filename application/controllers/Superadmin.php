@@ -1234,4 +1234,34 @@ class Superadmin extends MY_Controller
 
         redirect('superadmin/kelola-metode-bayar');
     }
+
+    public function ubah_harga_kg()
+    {
+        $id = $this->input->post('ID');
+
+        $range_low = $this->input->post('range_low');
+        $range_high = $this->input->post('range_high');
+        $harga = $this->input->post('harga');
+
+        $data = [
+            'range_low' => $range_low,
+            'range_high' => $range_high,
+            'harga' => $harga,
+            'created_at' => date('Y-m-d H:i:s'),
+            'created_by' => $this->user['email'],
+        ];
+
+        $condition = ['ID' => $id];
+
+        # simpan
+        $this->db->update('golongan_bobot', $data, $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            $this->session->set_flashdata('succ', 'Berhasil simpan');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal simpan');
+        }
+
+        redirect('superadmin/harga-bobot');
+    }
 }

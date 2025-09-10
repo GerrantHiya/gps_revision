@@ -17,6 +17,67 @@
         + Tambah
     </button>
 
+    <!-- EDIT DATA MODAL -->
+    <div class="modal fade" id="ubah" tabindex="-1" aria-labelledby="UbahHarga" aria-hidden="true">
+        <div class="modal-dialog">
+            <form class="modal-content" action="<?= base_url('superadmin/ubah_harga_kg') ?>" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h4 class="text-dark mb-0"><strong>Ubah Harga</strong></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row pt-3 mb-3">
+                        <div class="col">
+                            <input type="hidden" name="ID" id="edit_ID">
+                            <label class="sr-only" for="edit_bbawah">Batas Bawah</label>
+                            <div class="input-group mb-2">
+                                <input type="number" readonly min="0" maxlength="6" class="form-control rounded-0" name="range_low" id="edit_bbawah" placeholder="Batas Bawah">
+                                <div class="input-group-prepend">
+                                    <label for="bbawah" class="input-group-text"><b>Kilogram</b></label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col">
+
+                            <label class="sr-only" for="edit_batas">Batas Atas</label>
+                            <div class="input-group mb-2">
+                                <input type="number" readonly min="0" maxlength="6" name="range_high" class="form-control rounded-0" id="edit_batas" placeholder="Batas Atas">
+                                <div class="input-group-prepend">
+                                    <label for="batas" class="input-group-text"><b>Kilogram</b></label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+
+                            <label class="sr-only" for="edit_harga_display">Harga</label>
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                    <label for="edit_harga_display" class="input-group-text rounded-0"><b>Rp</b></label>
+                                </div>
+                                <input type="text" class="form-control rounded-0" id="edit_harga_display" placeholder="Harga">
+
+                                <input type="hidden" name="harga" id="edit_harga">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="<?= base_url('superadmin/harga-bobot') ?>" class="btn btn-warning">reset</a>
+                    <input type="submit" value="simpan" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- INPUT DATA MODAL -->
     <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="TambahHarga" aria-hidden="true">
         <div class="modal-dialog">
@@ -98,7 +159,13 @@
                         <td class="col-2">highest: <?= $harga['range_high'] ?> kg</td> <!-- High -->
                         <td>Rp.<?= $harga['harga_formatted'] ?></td> <!-- Harga -->
                         <td class="col-2">
-                            <a href="" class="badge badge-warning text-danger">edit</a>
+                            <button type="button"
+                                onclick="fill('edit_ID', '<?= $harga['ID'] ?>');
+                                    fill('edit_bbawah','<?= $harga['range_low'] ?>');
+                                    fill('edit_batas','<?= $harga['range_high'] ?>');
+                                    fill('edit_harga', '<?= $harga['harga'] ?>');
+                                    fill('edit_harga_display', '<?= $harga['harga_formatted'] ?>');"
+                                data-toggle="modal" data-target="#ubah" class="badge border-0 badge-warning text-danger">edit</button>
                             <a href="<?= base_url('superadmin/harga-bobot/hapus/') . md5($harga['ID']) ?>" class="badge badge-danger">delete</a>
                         </td> <!-- Button -->
                     </tr>
@@ -128,5 +195,18 @@
             displayInput.value = formatRupiah(raw);
             hiddenInput.value = raw;
         });
+
+        const edit_displayInput = document.getElementById('edit_harga_display');
+        const edit_hiddenInput = document.getElementById('edit_harga');
+
+        edit_displayInput.addEventListener('input', function() {
+            const raw = edit_displayInput.value.replace(/\./g, '').replace(/\D/g, '');
+            edit_displayInput.value = formatRupiah(raw);
+            edit_hiddenInput.value = raw;
+        });
     });
+
+    function fill(id, isi) {
+        document.getElementById(id).value = isi;
+    }
 </script>
