@@ -1206,4 +1206,32 @@ class Superadmin extends MY_Controller
         }
         redirect('superadmin/kelola-metode-bayar');
     }
+
+    public function ubah_metode_bayar()
+    {
+        $id = $this->input->post('ID');
+
+        $metode_bayar = $this->input->post('metode_bayar');
+        $nama_bank = $this->input->post('nama_bank');
+        $is_card = $this->input->post('is_card');
+
+        $data = [
+            'metode' => $metode_bayar,
+            'is_card' => $is_card,
+            'bank' => $nama_bank,
+        ];
+
+        $condition = ['ID' => $id];
+
+        # simpan
+        $this->db->update('metode_pembayaran', $data, $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            $this->session->set_flashdata('succ', 'Berhasil simpan');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal simpan');
+        }
+
+        redirect('superadmin/kelola-metode-bayar');
+    }
 }
