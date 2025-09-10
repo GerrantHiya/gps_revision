@@ -1248,7 +1248,7 @@ class Superadmin extends MY_Controller
             'range_high' => $range_high,
             'harga' => $harga,
             'created_at' => date('Y-m-d H:i:s'),
-            'created_by' => $this->user['email'],
+            'created_by' => $this->session->userdata('user')['email'],
         ];
 
         $condition = ['ID' => $id];
@@ -1263,5 +1263,35 @@ class Superadmin extends MY_Controller
         }
 
         redirect('superadmin/harga-bobot');
+    }
+
+    public function ubah_harga_km()
+    {
+        $id = $this->input->post('ID');
+
+        $range_low = $this->input->post('range_low');
+        $range_high = $this->input->post('range_high');
+        $harga = $this->input->post('harga');
+
+        $data = [
+            'range_low' => $range_low,
+            'range_high' => $range_high,
+            'harga' => $harga,
+            'created_at' => date('Y-m-d H:i:s'),
+            'created_by' => $this->session->userdata('user')['email'],
+        ];
+
+        $condition = ['ID' => $id];
+
+        # simpan
+        $this->db->update('golongan_jarak', $data, $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            $this->session->set_flashdata('succ', 'Berhasil simpan');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal simpan');
+        }
+
+        redirect('superadmin/harga-jarak');
     }
 }
