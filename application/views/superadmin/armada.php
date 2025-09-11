@@ -42,7 +42,7 @@
                             <td>
                                 <button type="submit" class="badge badge-primary border-0">save</button>
                                 <a href="<?= base_url('superadmin/kelola-armada/detail/') . $armada['plat_nomor'] ?>" class="badge badge-warning">lacak</a>
-                                <a href="" class="badge badge-danger">delete</a>
+                                <a href="<?= base_url('superadmin/kelola-armada/hapus/' . md5($armada['armada_ID'])) ?>" class="badge badge-danger">delete</a>
                             </td>
                         </form>
                     </tr>

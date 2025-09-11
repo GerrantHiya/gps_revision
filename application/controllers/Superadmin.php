@@ -1294,4 +1294,30 @@ class Superadmin extends MY_Controller
 
         redirect('superadmin/harga-jarak');
     }
+
+    public function ubah_tipe_kurir()
+    {
+        $id = $this->input->post('ID');
+
+        $tipe = $this->input->post('tipe');
+        $durasi_hari = $this->input->post('durasi');
+        $biaya = $this->input->post('biaya');
+
+        $data = [
+            'tipe' => $tipe,
+            'durasi_hari' => $durasi_hari,
+            'biaya' => $biaya,
+        ];
+
+        $condition = ['ID' => $id];
+
+        $this->db->update('tipe_kurir', $data, $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            $this->session->set_flashdata('succ', 'Berhasil simpan');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal simpan');
+        }
+        redirect('superadmin/kelola-tipe-kurir');
+    }
 }
