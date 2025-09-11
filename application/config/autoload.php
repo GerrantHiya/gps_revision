@@ -148,4 +148,5 @@ $autoload['model'] = array(
     'Superadmin_Model',
     'General_Model',
     'Iot_Model',
+    'Report_Model',
 );

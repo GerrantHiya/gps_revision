@@ -67,6 +67,13 @@
             <div class="col-md card bg-white border border-dark">
                 <!-- LOGIN -->
                 <form action="<?= base_url('auth/') ?>" method="post" class="card-body p-4">
+                    <div class="row mb-3">
+                        <div class="col"></div>
+                        <div class="col-4">
+                            <img class="img-fluid" src="<?= base_url() ?>assets/logo.png">
+                        </div>
+                        <div class="col"></div>
+                    </div>
                     <h5 class="text-center mb-4"><b>LOGIN ADMIN</b></h5>
                     <input type="text" name="username" placeholder="Username" value="<?= set_value('username') ?>" class="form-control text-center mb-3" style="border-radius:100px; font-size:18px">
                     <?= form_error('username', '<div class="text-danger m-0 mb-3">', '</div>') ?>
@@ -84,6 +91,10 @@
                     <?php endif; ?>
                     <div class="text-center">
                         <input type="submit" value="LOGIN" name="login" class="btn btn-primary pl-4 pr-4 pt-2 pb-2" style="font-weight:bold; border-radius: 100px;">
+                    </div>
+
+                    <div class="text-center mt-2">
+                        <a href="<?= base_url('customer/registration') ?>" class="badge badge-secondary">Customer Registration</a>
                     </div>
                 </form>
             </div>

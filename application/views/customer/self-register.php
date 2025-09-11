@@ -118,6 +118,8 @@
                     <div class="text-center">
                         <input id="bt" type="submit" value="Daftar!" name="login" class="btn btn-primary pl-4 pr-4 pt-2 pb-2" style="font-weight:bold; border-radius: 100px;">
                     </div>
+
+                    <div class="text-center mt-2"><a href="<?= base_url() ?>" class="badge badge-secondary">kembali</a></div>
                 </div>
 
             </form>

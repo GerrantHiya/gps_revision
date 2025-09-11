@@ -19,7 +19,5 @@ class Report extends MY_Controller
         $jml_paket_terkirim = 0;
         $jml_paket_hilang = 0;
         $ttl_customer = 0;
-
-        $this->Superadmin_Model->get_kargo_all();
     }
 }
