@@ -1320,4 +1320,30 @@ class Superadmin extends MY_Controller
         }
         redirect('superadmin/kelola-tipe-kurir');
     }
+
+    public function ubah_kategori()
+    {
+        $id = $this->input->post('ID');
+
+        $kategori = $this->input->post('kategori');
+        $harga = $this->input->post('harga');
+
+        $data = [
+            'Nama' => $kategori,
+            'harga' => $harga,
+            'created_at' => date('Y-m-d'),
+            'created_by' => $this->session->userdata('user')['email'],
+        ];
+
+        $condition = ['ID' => $id];
+
+        $this->db->update('kategori_paket', $data, $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            $this->session->set_flashdata('succ', 'Berhasil simpan');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal simpan');
+        }
+        redirect('superadmin/harga-kategori');
+    }
 }
