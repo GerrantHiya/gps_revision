@@ -34,6 +34,7 @@ class MY_Controller extends CI_Controller
             '^customer/reg-by-admin$',
             '^auth/verify(?:/[^/]+){0,2}$',
             '^pricelist$',
+            '^report/create_report$'
         ];
 
         $current_uri = strtolower($this->uri->uri_string());

@@ -7,17 +7,18 @@ class Report extends MY_Controller
     {
         $data['title'] = 'Report';
 
-        $input = $this->input->post('month_year');
+        // $input = $this->input->post('month_year');
+        $input = '06/2025';
 
-        $exp = explode('/', $input);
-        $month = $exp[0];
-        $year = $exp[1];
+        $data = $this->Report_Model->monthly_report($input);
 
-        $ttl_tarif_terbentuk = 0;
-        $ttl_tarif_dibayar = 0;
-        $ttl_tarif_blm_dibayar = 0;
-        $jml_paket_terkirim = 0;
-        $jml_paket_hilang = 0;
-        $ttl_customer = 0;
+        var_dump($data);
+
+        $ttl_tarif_terbentuk = $data['data_kargo_cur_period']['ttl_tarif_terbentuk'];
+        $ttl_tarif_dibayar = $data['data_kargo_cur_period']['ttl_tarif_dibayar'];
+        $ttl_tarif_blm_dibayar = $data['data_kargo_cur_period']['ttl_tarif_blm_dibayar'];
+        $jml_paket_terkirim = $data['data_kargo_cur_period']['jml_paket_terkirim'];
+        $jml_paket_hilang = $data['data_kargo_cur_period']['jml_paket_hilang'];
+        $ttl_customer = $data['data_cust_cur_period']['ttl_customer'];
     }
 }
