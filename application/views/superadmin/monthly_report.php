@@ -60,8 +60,8 @@
         </tr>
         <tr>
             <th class="border">Tarif Terbentuk</th>
-            <th class="border bg-white">Total Pelunasan</th>
-            <th class="border">Total Piutang</th>
+            <th class="border bg-white">Total Bayar</th>
+            <th class="border">Sisa Tagihan</th>
             <th class="border bg-white">Paket Terkirim</th>
             <th class="border">Paket Hilang</th>
         </tr>

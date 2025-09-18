@@ -6,6 +6,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @property Customer_Model $Customer_Model
  * @property General_Model $General_Model
  * @property Report_Model $Report_Model
+ * @property Iot_Model $Iot_Model
  * @property rajaongkir $rajaongkir
  * @property zipcodebase $zipcodebase
  * @property CI_Form_validation $form_validation

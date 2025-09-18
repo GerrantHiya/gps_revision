@@ -69,7 +69,7 @@ class Customer extends MY_Controller
             ];
 
             $message =
-                'Klik link berikut ini <a href="' . base_url('auth/verify/' . $activation_key . '/' . urlencode($email)) . '">Link Aktivasi</a>';
+                'Klik link berikut: <a href="' . base_url('auth/verify/' . $activation_key . '/' . urlencode($email)) . '">Link Aktivasi</a>';
 
             if (!$this->mailer->sendEmail('Lacak Logistik', $email, 'Customer Account Activation', $message)) {
                 $this->session->set_flashdata('error', 'gagal kirim email');

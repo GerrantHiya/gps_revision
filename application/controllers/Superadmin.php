@@ -376,6 +376,7 @@ class Superadmin extends MY_Controller
             'user' => $this->user,
             'armada' => $data_armada,
             'is_peta' => true,
+            'loc_hist' => $this->Iot_Model->get_loc_hist($plat_nomor)
         ];
 
         $this->load_template('superadmin/peta', $data);
