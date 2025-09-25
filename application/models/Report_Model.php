@@ -42,6 +42,8 @@ class Report_Model extends CI_Model
         );
         $this->db->from('customer');
         $this->db->where('customer.active = 1');
+        $this->db->where('MONTH(customer.created_at) <= ' . $month);
+        $this->db->where('YEAR(customer.created_at) <= ' . $year);
 
         $data_cust_cur_period = $this->db->get()->row_array();
 
@@ -65,23 +67,31 @@ class Report_Model extends CI_Model
         $received_bfr = (int) $data_kargo_bfr_period['ttl_paket_terkirim_bfr'];
         $received_cur = (int) $data_kargo_cur_period['jml_paket_terkirim'];
 
-        if ($invoice_bfr != 0 && $hilang_bfr != 0 && $received_bfr != 0) {
-            $percentage_invoice = (($invoice_cur - $invoice_bfr) / $invoice_bfr) * 100;
-            $percentage_hilang = (($hilang_cur - $hilang_bfr) / $hilang_bfr) * 100;
-            $percentage_received = (($received_cur - $received_bfr) / $received_bfr) * 100;
-        } else {
-            $percentage_invoice = 0;
-            $percentage_hilang = 0;
-            $percentage_received = 0;
+        /**
+         * $percentage_invoice = (($invoice_cur - $invoice_bfr) / $invoice_bfr) * 100;
+         * $percentage_hilang = (($hilang_cur - $hilang_bfr) / $hilang_bfr) * 100;
+         * $percentage_received = (($received_cur - $received_bfr) / $received_bfr) * 100;
+         * $percentage_invoice = 0;
+         * $percentage_hilang = 0;
+         * $percentage_received = 0;
+         */
+        if ($invoice_bfr == null && $hilang_bfr == null && $received_bfr == null) {
+            $invoice_bfr = 0;
+            $hilang_bfr = 0;
+            $received_bfr = 0;
         }
+
         # return var
         $data = [
             'data_kargo_cur_period' => $data_kargo_cur_period,
             'data_cust_cur_period'  => $data_cust_cur_period,
             'data_kargo_bfr_period' => $data_kargo_bfr_period,
-            'percentage_invoice'    => $percentage_invoice,
-            'percentage_hilang'     => $percentage_hilang,
-            'percentage_received'   => $percentage_received,
+            /**
+             * 
+             * 'percentage_invoice'    => $percentage_invoice,
+             * 'percentage_hilang'     => $percentage_hilang,
+             * 'percentage_received'   => $percentage_received,
+             */
             'invoice_bfr'           => $invoice_bfr,
             'invoice_cur'           => $invoice_cur,
             'hilang_bfr'            => $hilang_bfr,

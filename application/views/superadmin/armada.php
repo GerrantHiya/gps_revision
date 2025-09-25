@@ -25,7 +25,12 @@
                 <?php foreach ($list_armada as $armada) { ?>
                     <tr>
                         <td><?= $nomor++ ?></td>
-                        <td><?= $armada['nama_jenis'] ?>-<?= $armada['plat_nomor'] ?></td>
+                        <td>
+                            <?= $armada['nama_jenis'] ?>-<?= $armada['plat_nomor'] ?>
+                            <?php if ($this->session->flashdata('id_armada' . $armada['armada_ID'])): ?>
+                                <div class="alert alert-primary"><?= $this->session->flashdata('id_armada' . $armada['armada_ID']) ?></div>
+                            <?php endif ?>
+                        </td>
                         <form action="<?= base_url('superadmin/pilih_sopir?nopol=') . $armada['plat_nomor'] ?>" method="post">
                             <td>
                                 <select name="sopir" id="sopir" class="form-control rounded-0 border-0 p-1">
@@ -41,6 +46,7 @@
                             </td>
                             <td>
                                 <button type="submit" class="badge badge-primary border-0">save</button>
+                                <a href="<?= base_url('superadmin/showarmadaid?id=' . md5($armada['armada_ID'])) ?>" class="badge badge-secondary">show ID</a>
                                 <a href="<?= base_url('superadmin/kelola-armada/detail/') . $armada['plat_nomor'] ?>" class="badge badge-warning">lacak</a>
                                 <a href="<?= base_url('superadmin/kelola-armada/hapus/' . md5($armada['armada_ID'])) ?>" class="badge badge-danger">delete</a>
                             </td>

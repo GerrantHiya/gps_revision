@@ -1347,4 +1347,19 @@ class Superadmin extends MY_Controller
         }
         redirect('superadmin/harga-kategori');
     }
+
+    public function showarmadaid()
+    {
+        $id_md5 = $this->input->get('id');
+
+        $this->db->select('ID');
+        $this->db->from('armada');
+        $this->db->where('md5(ID)', $id_md5);
+
+        $data = $this->db->get()->row_array();
+
+        $this->session->set_flashdata('id_armada' . $data['ID'], $data['ID']);
+
+        redirect('superadmin/kelola-armada');
+    }
 }
