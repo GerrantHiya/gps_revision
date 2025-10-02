@@ -21,7 +21,7 @@
                         <td>
                             <?php if (!empty($armada['NamaLengkap'])) { ?>
                                 <a href="<?= base_url('superadmin/proses-kirim/load/') . md5($armada['armada_ID']) ?>" class="badge badge-primary">muat kargo</a>
-                                <a href="<?= base_url('superadmin/berangkat/') . md5($armada['armada_ID']) ?>" class="badge badge-success">berangkat</a>
+                                <!-- <a href="<?= base_url('superadmin/berangkat/') . md5($armada['armada_ID']) ?>" class="badge badge-success">berangkat</a> -->
                             <?php } ?>
                         </td>
                     </tr>
