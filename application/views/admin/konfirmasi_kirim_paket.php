@@ -24,11 +24,11 @@
                 </tr>
                 <tr>
                     <td class="col-3">Volume</td>
-                    <td class="col">: <strong><?= $data_paket['volume'] ?? '' ?></strong> cm<sup>3</sup></td>
+                    <td class="col">: <strong><?= $data_paket['volume'] ?? '' ?></strong> m<sup>3</sup></td>
                 </tr>
                 <tr>
                     <td class="col-3">Tanggal Tiba (Estimasi)</td>
-                    <td class="col">: <strong><?= date('d M Y',strtotime($data_paket['target_tiba'])) ?? '' ?></strong></td>
+                    <td class="col">: <strong><?= date('d M Y', strtotime($data_paket['target_tiba'])) ?? '' ?></strong></td>
                 </tr>
                 <tr>
                     <td class="col-3">Biaya Total</td>

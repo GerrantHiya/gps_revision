@@ -37,6 +37,16 @@
 
                     <div class="row mb-3">
                         <div class="col">
+                            <select name="tipe_2" required id="tipe_2" class="form-control rounded-0">
+                                <option value="">-- Pilih Moda Transportasi --</option>
+                                <option value="pesawat">Pesawat</option>
+                                <option value="kapal laut">Kapal Laut</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
                             <input type="number" min="0" max="14" name="durasi" id="durasi" class="form-control rounded-0" placeholder="Durasi Hari">
                         </div>
                     </div>
@@ -68,9 +78,9 @@
     <!-- EDIT DATA MODAL -->
     <div class="modal fade" id="ubah" tabindex="-1" aria-labelledby="UbahHarga" aria-hidden="true">
         <div class="modal-dialog">
-            <form class="modal-content" action="<?= base_url('superadmin/ubah_kurir') ?>" method="post" enctype="multipart/form-data">
+            <form class="modal-content" action="<?= base_url('superadmin/kelola-tipe-kurir/edit') ?>" method="post" enctype="multipart/form-data">
                 <div class="modal-header">
-                    <h4 class="text-dark mb-0"><strong>Ubah Tipe Kurir</strong></h4>
+                    <h4 class="text-dark mb-0"><strong>Ubah Rute</strong></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -119,7 +129,7 @@
         <thead>
             <tr>
                 <th scope="col" class="col-1">No.</th>
-                <th scope="col" class="">Tipe Kurir</th>
+                <th scope="col" class="">Rute</th>
                 <th scope="col" class="">Durasi (hari)</th>
                 <th scope="col" class="">Biaya</th>
                 <th scope="col" class="">Action</th>

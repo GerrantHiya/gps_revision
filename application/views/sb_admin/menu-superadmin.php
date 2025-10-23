@@ -35,14 +35,14 @@
 <li class="<?= ($title == 'Terima Kargo') ? 'active' : '' ?> nav-item">
     <a class="nav-link" href="<?= base_url('superadmin/terima-kargo') ?>">
         <i class="fas fa-fw fa-boxes"></i>
-        <span>Terima Kargo [NEW]</span></a>
+        <span>Terima Kargo</span></a>
 </li>
 
 <!-- Nav Item - Kargo Hilang -->
 <li class="<?= ($title == 'Kargo Hilang') ? 'active' : '' ?> nav-item">
     <a class="nav-link" href="<?= base_url('superadmin/kargo-hilang') ?>">
         <i class="fas fa-fw fa-circle text-danger"></i>
-        <span>Kargo Hilang [NEW]</span></a>
+        <span>Kargo Hilang</span></a>
 </li>
 
 <?php if ($this->session->userdata('user')['is_super'] == 1) { ?>
@@ -60,12 +60,14 @@
         </a>
         <div id="brt" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<?= base_url('superadmin/harga-bobot') ?>">Harga per KG</a>
-                <a class="collapse-item" href="<?= base_url('superadmin/harga-jarak') ?>">Harga per KM</a>
+                <!-- <a class="collapse-item" href="<?= base_url('superadmin/harga-bobot') ?>">Harga per KG</a> -->
+                <!-- <a class="collapse-item" href="<?= base_url('superadmin/harga-jarak') ?>">Harga per KM</a> -->
                 <!-- <a class="collapse-item" href="<?= base_url('superadmin/harga-volume') ?>">Harga per Volume</a> -->
+                <!-- <a class="collapse-item" href="<?= base_url('superadmin/kelola-metode-pengiriman') ?>">Metode Pengiriman</a> -->
+                <!-- <a class="collapse-item" href="<?= base_url('superadmin/kelola-rute-kirim') ?>">Kelola Rute Kirim</a> -->
+                <a class="collapse-item" href="<?= base_url('superadmin/kelola-tipe-kurir') ?>">Rute Kirim</a>
                 <a class="collapse-item" href="<?= base_url('superadmin/harga-kategori') ?>">Kategori Paket</a>
                 <a class="collapse-item" href="<?= base_url('superadmin/kelola-armada') ?>">Kelola Armada</a>
-                <a class="collapse-item" href="<?= base_url('superadmin/kelola-tipe-kurir') ?>">Tipe Kurir</a>
                 <a class="collapse-item" href="<?= base_url('superadmin/kelola-metode-bayar') ?>">Metode Pembayaran</a>
             </div>
         </div>
@@ -82,10 +84,9 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="<?= base_url('superadmin/kontrak-sopir') ?>">Sopir Kontrak</a>
                 <a class="collapse-item" href="<?= base_url('superadmin/monthly-report') ?>">Monthly Report</a>
-                <a class="collapse-item" href="<?= base_url('') ?>">Performance</a>
-                <a class="collapse-item" href="<?= base_url('') ?>"></a>
-                <a class="collapse-item" href="<?= base_url('') ?>"></a>
-                <a class="collapse-item" href="<?= base_url('') ?>"></a>
+                <!-- <a class="collapse-item" href="<?= base_url('') ?>"></a> -->
+                <!-- <a class="collapse-item" href="<?= base_url('') ?>"></a> -->
+                <!-- <a class="collapse-item" href="<?= base_url('') ?>"></a> -->
             </div>
         </div>
     </li>

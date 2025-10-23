@@ -1,4 +1,4 @@
-<form class="container mb-3" action="<?= base_url('superadmin/kirim_paket') ?>" method="post" enctype="multipart/form-data">
+<form class="container mb-3" action="<?= base_url('superadmin/kirim-paket') ?>" method="post" enctype="multipart/form-data">
 
     <?php if ($this->session->flashdata('error')) { ?>
         <div class="alert alert-danger">
@@ -47,11 +47,14 @@
 
             <div class="row">
                 <div class="col-md-1">
-                    <label for="kota_tujuan"><strong>Kota Tujuan</strong></label>
+                    <label for="tipe_kurir"><strong>Rute</strong></label>
                 </div>
                 <div class="col-md">
-                    <select name="kota_tujuan" id="kota_tujuan" class="form-control">
-                        <!-- <option value="">-- Pilih Kota --</option> -->
+                    <select name="tipe_kurir" id="tipe_kurir" class="form-control pilihan">
+                        <option value="">-- Pilih Rute --</option>
+                        <?php foreach ($list_tipekurir as $tipekurir) : ?>
+                            <option value="<?= $tipekurir['ID'] ?>"><?= $tipekurir['tipe'] . ' (' . $tipekurir['durasi_hari'] . ' hari) - Rp.' . $tipekurir['biaya_formatted'] . '/kg' ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
@@ -95,20 +98,6 @@
                         <?php endforeach; ?>
                     </select>
                     <?= form_error('kategori', '<div class="text-danger">', '</div>') ?>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-1">
-                    <label for="tipe_kurir"><strong>Tipe Kurir</strong></label>
-                </div>
-                <div class="col-md">
-                    <select name="tipe_kurir" id="tipe_kurir" class="form-control pilihan">
-                        <option value="">-- Pilih Tipe Kurir --</option>
-                        <?php foreach ($list_tipekurir as $tipekurir) : ?>
-                            <option value="<?= $tipekurir['ID'] ?>"><?= $tipekurir['tipe'] . ' (' . $tipekurir['durasi_hari'] . ' hari) - Rp.' . $tipekurir['biaya_formatted'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
                 </div>
             </div>
 
@@ -319,49 +308,6 @@
     // Inisialisasi Select2 untuk kota_tujuan
     // Pastikan Anda sudah mengimpor jQuery dan Select2 di halaman ini
     $(document).ready(function() {
-        $('#kota_tujuan').select2({
-            placeholder: '-- cari kecamatan/kelurahan --',
-            minimumInputLength: 3,
-            ajax: {
-                url: '<?= base_url("superadmin/cari_kota_ajax") ?>',
-                dataType: 'json',
-                delay: 300,
-                data: function(params) {
-                    return {
-                        search: params.term // kata yang diketik user
-                    };
-                },
-                processResults: function(data) {
-                    return {
-                        results: data.map(function(item) {
-                            return {
-                                id: String(item.zip_code + '-' + item.city_name),
-                                text: item.city_name + ' - ' + item.province_name + ' (' + item.zip_code + ')'
-                            };
-                        })
-                    };
-                },
-                cache: true
-            }
-        });
-
-        $('#kota_tujuan').on('select2:select', function(e) {
-            const selectedData = e.params.data;
-
-            // Tambahkan secara eksplisit ke DOM agar form bisa submit value-nya
-            $(this).append(
-                $('<option>', {
-                    value: selectedData.id,
-                    text: selectedData.text,
-                    selected: true
-                })
-            );
-        });
-
-        $('form').on('submit', function(e) {
-            console.log('Kota Tujuan:', $('#kota_tujuan').val());
-        });
-
         $('.pilihan').select2();
     });
 </script>

@@ -94,7 +94,6 @@ class Superadmin extends MY_Controller
         $this->form_validation->set_rules('sender_ID', 'Nama Pengirim', 'required|trim');
         $this->form_validation->set_rules('receiver_name', 'Nama Penerima', 'required|trim');
         $this->form_validation->set_rules('receiver_telp', 'Nomor Telepon Penerima', 'required|trim');
-        $this->form_validation->set_rules('kota_tujuan', 'Kota Tujuan', 'required|trim');
         $this->form_validation->set_rules('alamat_tujuan', 'Alamat Tujuan', 'required|trim');
         $this->form_validation->set_rules('kategori', 'Kategori Paket', 'required|trim');
 
@@ -106,8 +105,6 @@ class Superadmin extends MY_Controller
                 'sender_ID' => $this->input->post('sender_ID'),
                 'receiver_name' => $this->input->post('receiver_name'),
                 'receiver_telp' => $this->input->post('receiver_telp'),
-                'kota_tujuan' => $this->input->post('kota_tujuan'), # zip code
-                // 'kota_tujuan' => '17111', # zip code
                 'alamat_tujuan' => $this->input->post('alamat_tujuan'),
                 'bobot' => $this->input->post('bobot'),
                 'kategori' => $this->input->post('kategori'),
@@ -117,7 +114,7 @@ class Superadmin extends MY_Controller
 
             $ID = $this->_simpan_data_paket($data_insert);
 
-            if (empty($ID)) {
+            if (empty($ID) or $ID == null) {
                 $this->session->set_flashdata('error', 'Gagal simpan data');
             } else {
                 // konfirmasi
@@ -132,81 +129,65 @@ class Superadmin extends MY_Controller
     {
         $ID = "KRM" . ($this->General_Model->hitung_row('pengiriman') + 1) . date('Y');
 
-        // zip code dan kota
-        $str_expl = explode('-', $data['kota_tujuan']);
-
-        $zip_code_tujuan = $str_expl[0];
-        $kota_tujuan = $str_expl[1];
-
         $total_biaya = 0;
-        $bobot = 0;
-
-        /** BERAT VOLUMETRIK
-         * konstanta metode kirim darat: 4000
-         * 
-         * RUMUS: VOLUME / 4000 (hasil untuk satuan KG)
-         */
-
-        /** SUMBER VARIABLE BOBOT
-         * 
-         * diambil mana yang terbesar: berat volumetrik atau bobot asli
-         * 
-         */
-
-        /** SUMBER:
-         * https://repositori.uin-alauddin.ac.id/20253/1/Nikmatul%20Magfirah.pdf?utm_source=chatgpt.com
-         */
-
-        $berat_volumetrik = (int) $data['volume'] / 4000;
-        $berat_asli_kg = $data['bobot'] / 1000; # diubah satuan ke KG
-
-        if ($berat_asli_kg > $berat_volumetrik) {
-            $bobot = $berat_asli_kg;
-        } else if ($berat_asli_kg == $berat_volumetrik) {
-            $bobot = $berat_asli_kg;
-        } else {
-            $bobot = $berat_volumetrik;
-        }
-
-        $biaya_bobot = (int) $this->Superadmin_Model->kelompok_harga_bobot($bobot); # biaya per Kg. input per kilogram
-        $biaya_kategori = (int) $this->Superadmin_Model->kelompok_harga_kategori($data['kategori']);
-
-        // untuk sementara (09/07/2025 biaya volume tidak perlu digunakan)
-        // $biaya_volume = (int) $this->Superadmin_Model->kelompok_harga_volume($data['volume']); # biaya per meter kubik. input per cm kubik
-
-        $response_jarak = $this->zipcodebase->get_distance('17435', $zip_code_tujuan, 'id'); # JSON
-
-        # harus diganti per titik
-        $jarak = (int) $response_jarak['results'][$zip_code_tujuan]; # jarak per Km
-
-        $biaya_jarak = (int) $this->Superadmin_Model->kelompok_harga_jarak($jarak); # biaya per km
-
-        # bobot input
-        $bobot_kg = (int) $bobot;
-
-        // # volume input CENTIMETER KUBIK diubah ke METER KUBIK
-        // $volume_m_kubik = (int) $data['volume'] / 1000000;
-
-        # total + (bobot_kg * biaya_bobot)
-        $total_biaya += ($bobot_kg * $biaya_bobot);
-
-        // # total + (volume_m_kubik * biaya_volume)
-        // $total_biaya += ($volume_m_kubik * $biaya_volume);
-
-        # total + kategori
-        $total_biaya += $biaya_kategori;
-
-        # total + (jarak_km * biaya_jarak)
-        $total_biaya += ($jarak * $biaya_jarak);
+        // $bobot = 0;
 
         # tanggal kirim dan limit tanggal tiba
         $sent_date = date('Y-m-d');
 
         $tipe_kurir = $this->Superadmin_Model->get_tipekurir_id($data['tipe_kurir']);
+
+        /**
+         * BIAYA KIRIM SESUAI PROPOSAL
+         * 
+         * pesawat = (Volume /6000 ) * harga
+         * kapal = (Volume /5000 ) * harga
+         */
+
+        // METODE BARU
+
+        $rute_whole = explode('-', $tipe_kurir['tipe']);
+        $tujuan = $rute_whole[0];
+        $metode_kirim = $rute_whole[1];
+
+        // BY VOLUME
+
+        $volume_m_kubik = (float) ($data['volume']) / 1000000; # karna input menggunakan cm kubik
+
+        if ($volume_m_kubik >= (float) $tipe_kurir['minimal_kg']) {
+            if ($metode_kirim == 'pesawat') {
+                $harga_kirim_volume = ($volume_m_kubik / 6000) * (float) $tipe_kurir['biaya'];
+            } else {
+                $harga_kirim_volume = ($volume_m_kubik / 5000) * (float) $tipe_kurir['biaya'];
+            }
+        } else {
+            if ($metode_kirim == 'pesawat') {
+                $harga_kirim_volume = (2 / 6000) * (float) $tipe_kurir['biaya'];
+            } else {
+                $harga_kirim_volume = (2 / 5000) * (float) $tipe_kurir['biaya'];
+            }
+        }
+
+        // BY MASS
+
+        $bobot = (int) $data['bobot']; // G
+        $bobot_kg = $bobot / 1000; // KG
+        $harga_kirim_bobot = $bobot * (int) $tipe_kurir['biaya'];
+
+
+
+        // PERBANDINGAN CARI TERBESAR
+
+        if ($harga_kirim_bobot >= $harga_kirim_volume) {
+            $total_biaya += $harga_kirim_bobot;
+        } else {
+            $total_biaya += $harga_kirim_volume;
+        }
+
         $target_tiba_angka = strtotime('+' . (int)$tipe_kurir['durasi_hari'] . ' days', strtotime($sent_date));
         $target_tiba = date('Y-m-d', $target_tiba_angka);
 
-        $total_biaya += (int) $tipe_kurir['biaya'];
+        // $total_biaya += (int) $tipe_kurir['biaya'];
 
         $data_insert = [
             'ID' => $ID,
@@ -214,25 +195,25 @@ class Superadmin extends MY_Controller
             'receiver_name' => $data['receiver_name'],
             'receiver_telp' => $data['receiver_telp'],
             'alamat_tujuan' => $data['alamat_tujuan'],
-            'kota_tujuan' => $kota_tujuan,
+            'kota_tujuan' => $tujuan,
             'bobot' => $bobot_kg,
-            'jarak' => $jarak,
             'kategori_ID' => $data['kategori'],
             'harga_total' => $total_biaya,
             'tipe_kurir' => $data['tipe_kurir'],
             'sent_date' => $sent_date,
-            'volume' => $data['volume'],
+            'volume' => $volume_m_kubik,
             'target_tiba' => $target_tiba,
         ];
 
-        // var_dump($data['kota_tujuan']);
+        // var_dump($total_biaya);
+        // die;
 
         $this->db->insert('pengiriman', $data_insert);
 
         if ($this->General_Model->aff_row() > 0) {
             return $ID;
         } else {
-            return 0;
+            return null;
         }
     }
 
@@ -831,7 +812,7 @@ class Superadmin extends MY_Controller
     public function kelola_tipe_kurir($offset = 0)
     {
         $data = [
-            'title' => 'Kelola Tipe Kurir',
+            'title' => 'Kelola Rute',
             'list_tipekurir' => $this->Superadmin_Model->get_tipekurir($this->per_page, $offset),
         ];
 
@@ -1302,7 +1283,7 @@ class Superadmin extends MY_Controller
 
         $tipe = $this->input->post('tipe');
         $durasi_hari = $this->input->post('durasi');
-        $biaya = $this->input->post('biaya');
+        $biaya = $this->input->post('harga');
 
         $data = [
             'tipe' => $tipe,

@@ -58,35 +58,35 @@
             </div>
         </div>
 
-        <div class="col-md">
+        <!-- <div class="col-md">
             <div class="card">
                 <div class="card-header bg-primary text-white">
                     <strong class="text-wrap">Piutang Belum Dibayar</strong>
                 </div>
                 <div class="card-body text-dark bg-white text-center">
-                    <!-- JUMLAH PIUTANG -->
+                    JUMLAH PIUTANG
                     <h3><strong>Rp.<?= $piutang['total_tunggakan'] ?></strong></h3>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="row mb-2">
-        <div class="col-md">
+        <!-- <div class="col-md">
             <div class="card">
                 <div class="card-header bg-primary text-white">
                     <strong class="text-wrap">Transaksi Lunas</strong>
                 </div>
                 <div class="card-body text-dark bg-white text-center">
-                    <!-- Transaksi Lunas -->
+                    Transaksi Lunas
                     <h3><strong>Rp.<?= $piutang['total_bayar'] ?></strong></h3>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="col-md">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <strong class="text-wrap">Tipe Kurir Terlaris</strong>
+                    <strong class="text-wrap">Rute Terlaris</strong>
                 </div>
                 <div class="card-body text-dark bg-white text-center">
                     <!-- TIPE KURIR TERLARIS -->
@@ -95,17 +95,17 @@
             </div>
         </div>
 
-        <div class="col-md">
+        <!-- <div class="col-md">
             <div class="card">
                 <div class="card-header bg-primary text-white">
                     <strong class="text-wrap">Kota Tujuan Terbanyak</strong>
                 </div>
                 <div class="card-body text-dark bg-white text-center">
-                    <!-- KOTA TUJUAN TERBANYAK -->
+                    KOTA TUJUAN TERBANYAK
                     <h3><strong><?= ucwords(strtolower($kota_tujuan_terbanyak['kota_tujuan'])) ?></strong></h3>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <div class="row">

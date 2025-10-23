@@ -77,9 +77,9 @@ $route['superadmin/harga-bobot'] = 'superadmin/harga_per_kg';
 $route['superadmin/harga-bobot/(:num)'] = 'superadmin/harga_per_kg/$1';
 $route['superadmin/harga-bobot/hapus/(:any)'] = 'superadmin/hapus_harga_kg/$1';
 
-$route['superadmin/harga-jarak'] = 'superadmin/harga_per_km';
-$route['superadmin/harga-jarak/(:num)'] = 'superadmin/harga_per_km/$1';
-$route['superadmin/harga-jarak/hapus/(:any)'] = 'superadmin/hapus_harga_km/$1';
+// $route['superadmin/harga-jarak'] = 'superadmin/harga_per_km';
+// $route['superadmin/harga-jarak/(:num)'] = 'superadmin/harga_per_km/$1';
+// $route['superadmin/harga-jarak/hapus/(:any)'] = 'superadmin/hapus_harga_km/$1';
 
 $route['superadmin/harga-kategori'] = 'superadmin/kategori_view';
 $route['superadmin/harga-kategori/(:num)'] = 'superadmin/kategori_view/$1';
@@ -101,7 +101,12 @@ $route['superadmin/kontrak-sopir/edit/(:any)'] = 'superadmin/kontrak_sopir_edit_
 $route['superadmin/kontrak-sopir/daftar/(:any)'] = 'superadmin/kontrak_sopir_detail_view/$1';
 
 $route['superadmin/kelola-tipe-kurir'] = 'superadmin/kelola_tipe_kurir';
+$route['superadmin/kelola-tipe-kurir/edit'] = 'superadmin/ubah_tipe_kurir';
 $route['superadmin/kelola-tipe-kurir/hapus/(:any)'] = 'superadmin/hapus_tipe_kurir/$1';
+
+// $route['superadmin/kelola-rute-kirim'] = 'superadmin/kelola_rute_kirim';
+
+$route['superadmin/kelola-metode-pengiriman'] = 'superadmin/metode_pengiriman';
 
 $route['superadmin/bayar'] = 'superadmin/bayar_view';
 $route['superadmin/bayar/cetak/(:any)'] = 'superadmin/cetak_invoice/$1';

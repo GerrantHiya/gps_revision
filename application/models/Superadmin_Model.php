@@ -380,7 +380,7 @@ class Superadmin_Model extends CI_Model
     {
         $this->db->select('*, FORMAT(biaya,2) as biaya_formatted');
         $this->db->from('tipe_kurir');
-        $this->db->order_by('biaya', 'asc');
+        $this->db->order_by('tipe', 'asc');
 
         if ($limit !== null && $offset !== null) {
             $this->db->limit($limit, $offset);
