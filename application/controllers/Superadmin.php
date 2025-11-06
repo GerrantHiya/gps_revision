@@ -112,6 +112,7 @@ class Superadmin extends MY_Controller
                 'tipe_kurir' => $this->input->post('tipe_kurir'),
             ];
 
+            // var_dump($data_insert);die;
             $ID = $this->_simpan_data_paket($data_insert);
 
             if (empty($ID) or $ID == null) {
@@ -120,7 +121,6 @@ class Superadmin extends MY_Controller
                 // konfirmasi
                 redirect('superadmin/kirim-paket/' . md5($ID));
             }
-
             // echo $this->input->post('sender_ID');
         }
     }
@@ -152,27 +152,26 @@ class Superadmin extends MY_Controller
 
         // BY VOLUME
 
-        $volume_m_kubik = (float) ($data['volume']) / 1000000; # karna input menggunakan cm kubik
+        $volume_m_kubik = (float) ($data['volume']) / 1000000; # sebagai data saja
+        $volume_cm_kubik = (float) ($data['volume']); # menggunakan satuan cm kubik
 
-        if ($volume_m_kubik >= (float) $tipe_kurir['minimal_kg']) {
-            if ($metode_kirim == 'pesawat') {
-                $harga_kirim_volume = ($volume_m_kubik / 6000) * (float) $tipe_kurir['biaya'];
-            } else {
-                $harga_kirim_volume = ($volume_m_kubik / 5000) * (float) $tipe_kurir['biaya'];
-            }
+        if ($metode_kirim == 'pesawat') {
+            $berat_volumetrik = $volume_cm_kubik / 6000;
         } else {
-            if ($metode_kirim == 'pesawat') {
-                $harga_kirim_volume = (2 / 6000) * (float) $tipe_kurir['biaya'];
-            } else {
-                $harga_kirim_volume = (2 / 5000) * (float) $tipe_kurir['biaya'];
-            }
+            $berat_volumetrik = $volume_cm_kubik / 5000;
         }
+
+        if ($berat_volumetrik < (float) $tipe_kurir['minimal_kg']) {
+            $berat_volumetrik = (float) $tipe_kurir['minimal_kg'];
+        }
+
+        $harga_kirim_volume = $berat_volumetrik * (float) $tipe_kurir['biaya'];
 
         // BY MASS
 
         $bobot = (int) $data['bobot']; // G
         $bobot_kg = $bobot / 1000; // KG
-        $harga_kirim_bobot = $bobot * (int) $tipe_kurir['biaya'];
+        $harga_kirim_bobot = $bobot_kg * (int) $tipe_kurir['biaya'];
 
 
 
@@ -204,9 +203,6 @@ class Superadmin extends MY_Controller
             'volume' => $volume_m_kubik,
             'target_tiba' => $target_tiba,
         ];
-
-        // var_dump($total_biaya);
-        // die;
 
         $this->db->insert('pengiriman', $data_insert);
 

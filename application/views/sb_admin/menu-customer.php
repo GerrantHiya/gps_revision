@@ -18,8 +18,3 @@
 </li>
 
 <!-- Nav Item - Pricelist -->
-<li class="<?= ($title == 'Pricelist') ? 'active' : '' ?> nav-item">
-    <a class="nav-link" href="<?= base_url('customer/pricelist') ?>">
-        <i class="fas fa-fw fa-tags"></i>
-        <span>Pricelist</span></a>
-</li>
