@@ -1,7 +1,10 @@
 .DS_Store
 
 application/cache/*
+
+# database config (REAL)
 application/config/database.php
+
 !application/cache/index.html
 
 /old_61125/*
