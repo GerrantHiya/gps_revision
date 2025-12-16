@@ -121,21 +121,23 @@
         <tbody>
             <?php if (!empty($list_kategori)) { ?>
                 <?php foreach ($list_kategori as $kategori) { ?>
-                    <tr>
-                        <td><?= $nomor++ ?></td>
-                        <td><?= $kategori['Nama'] ?></td>
-                        <td>Rp.<?= $kategori['harga_formatted'] ?></td>
-                        <td>
-                            <button type="button"
-                                onclick="fill('edit_ID', '<?= $kategori['ID'] ?>');
+                    <?php if ($kategori['is_deactivate'] == 0) : ?>
+                        <tr>
+                            <td><?= $nomor++ ?></td>
+                            <td><?= $kategori['Nama'] ?></td>
+                            <td>Rp.<?= $kategori['harga_formatted'] ?></td>
+                            <td>
+                                <button type="button"
+                                    onclick="fill('edit_ID', '<?= $kategori['ID'] ?>');
                                     fill('edit_kategori', '<?= $kategori['Nama'] ?>');
                                     fill('edit_harga_display', '<?= $kategori['harga_formatted'] ?>');
                                     fill('edit_harga', '<?= $kategori['harga'] ?>');
                                     "
-                                data-toggle="modal" data-target="#ubah" class="badge border-0 badge-warning text-danger">edit</button>
-                            <a href="<?= base_url('superadmin/harga-kategori/hapus/' . md5($kategori['ID'])) ?>" class="badge badge-danger">delete</a>
-                        </td>
-                    </tr>
+                                    data-toggle="modal" data-target="#ubah" class="badge border-0 badge-warning text-danger">edit</button>
+                                <a href="<?= base_url('superadmin/harga-kategori/hapus/' . md5($kategori['ID'])) ?>" class="badge badge-danger">delete</a>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
                 <?php } ?>
             <?php } else { ?>
                 <tr>

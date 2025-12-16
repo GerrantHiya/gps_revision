@@ -31,7 +31,8 @@ class Customer_Model extends CI_Model
                 'pengiriman.volume AS volume, ' .
                 'kategori_paket.Nama AS nama_kategori, ' .
                 'pembayaran.ID AS ID_bayar, ' .
-                'tipe_kurir.tipe AS tipe_kurir'
+                'tipe_kurir.tipe AS tipe_kurir, ' . 
+                'pengiriman.hilang AS hilang'
         );
         $this->db->from('pembayaran');
         $this->db->join('metode_pembayaran', 'metode_pembayaran.ID = pembayaran.metode_bayar', 'left');
@@ -78,7 +79,8 @@ class Customer_Model extends CI_Model
                 'format(pengiriman.volume, 0) AS volume, ' .
                 'pengiriman.target_tiba AS target_tiba, ' .
                 'tipe_kurir.tipe AS tipe_kurir,' .
-                'pengiriman.armada_ID AS armada_ID'
+                'pengiriman.armada_ID AS armada_ID, ' . 
+                'pengiriman.hilang AS hilang'
         );
         $this->db->from('pengiriman');
         $this->db->join('kategori_paket', 'kategori_paket.ID = pengiriman.kategori_ID', 'left');

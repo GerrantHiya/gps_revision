@@ -49,21 +49,21 @@
     </div>
 </div>
 
-<table class="mb-3 mt-2 table table text-center align-middle">
+<table class="mb-3 mt-2 table table text-center align-middle" id="table-print">
     <thead>
         <tr>
             <th rowspan="2" class="col-sm-2 border bg-white">Periode</th>
             <th colspan="3" class="border">Pendapatan</th>
             <th colspan="2" class="border">Paket</th>
             <th class="col-sm-2 border bg-white" rowspan="2">Jumlah Customer</th>
-            <th class="col-sm-1 border" rowspan="2">Action</th>
+            <th class="col-sm-1 border" rowspan="2">Created Date</th>
         </tr>
         <tr>
             <th class="border">Tarif Terbentuk</th>
             <th class="border bg-white">Total Bayar</th>
             <th class="border">Sisa Tagihan</th>
             <th class="border bg-white">Paket Terkirim</th>
-            <th class="border">Paket Hilang</th>
+	        <th class="border">Paket Hilang</th>
         </tr>
     </thead>
     <tbody>
@@ -81,10 +81,7 @@
                     <td class="border border-1 bg-white"><?= $report['jml_paket_terkirim'] ?></td>
                     <td class="border border-1"><?= $report['jml_paket_hilang'] ?></td>
                     <td class="border border-1 bg-white"><?= $report['ttl_customer'] ?></td>
-                    <td class="border border-1">
-
-                    </td>
-                </tr>
+		            <td class="border border-1"><?= date('d-M-y', strtotime($report['created_at'])) ?></td>
             <?php endforeach; ?>
         <?php } else { ?>
             <tr class="border bg-white">
@@ -93,6 +90,10 @@
         <?php } ?>
     </tbody>
 </table>
+
+<div class="text-center">
+    <button type="button" onclick="print()" class="btn btn-outline-primary">Download As PDF</button>
+</div>
 
 <style>
     th[rowspan] {

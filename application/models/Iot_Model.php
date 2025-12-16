@@ -23,7 +23,7 @@ class Iot_Model extends CI_Model
         }
     }
 
-    public function get_loc_hist($plat_nomor)
+    public function get_loc_hist($plat_nomor, $kapan = null)
     {
         $this->db->select(
             'armada.longitude AS longitude,' .
@@ -34,6 +34,11 @@ class Iot_Model extends CI_Model
         $this->db->join('loc_hist', 'armada.ID = loc_hist.armada_ID', 'left');
         $this->db->where('armada.longitude = loc_hist.longitude');
         $this->db->where('armada.latitude = loc_hist.latitude');
+        
+        if (empty($kapan)) {
+            $this->db->where('DAY(loc_hist.created_at) = DAY(CURDATE())');
+        }
+        
         $this->db->limit(1);
 
         return $this->db->get()->row_array();

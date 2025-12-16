@@ -101,8 +101,7 @@
                         <th scope="col" class="col-md-2">Target Tiba</th>
                         <th scope="col" class="col-md">Alamat Lengkap</th>
                         <th scope="col" class="col-md-1">Bobot (kg)</th>
-                        <th scope="col" class="col-md-1">Volume (cm<sup>3</sup>)</th>
-                        <th scope="col" class="col-md-2">Action</th>
+                        <th scope="col" class="col-md-1">Volume (m<sup>3</sup>)</th>
                     </tr>
                 </thead>
 
@@ -115,9 +114,6 @@
                                 <td><?= $kargo['alamat_tujuan'] . ', ' . $kargo['kota_tujuan'] ?></td>
                                 <td><?= $kargo['bobot'] ?></td>
                                 <td><?= $kargo['volume'] ?></td>
-                                <td>
-                                    <a href="" class="badge badge-primary"><strong>detail</strong></a>
-                                </td>
                             </tr>
                         <?php endforeach; ?>
                     <?php } else { ?>

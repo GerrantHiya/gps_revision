@@ -12,12 +12,12 @@ class Mailer
 {
     function sendEmail($name_sender, $email_receiver, $subject, $message)
     {
-        $email_sender = "kirim@e-digital.space";
-        $appPassword = "nM19HpUQpZ?M";
+        $email_sender = "system@lacak-logistik.projectdeck.online";
+        $appPassword = "SukacitaSorga@777";
         $mail = new PHPMailer();
         $mail->isSMTP();
 
-        $mail->Host = "gator3059.hostgator.com";
+        $mail->Host = "smtp.hostinger.com";
         $mail->Username = $email_sender;
         $mail->Port = 465;
         $mail->Password = $appPassword;

@@ -11,7 +11,7 @@
                     <th class="col-md-2 border">Tanggal Kirim</th>
                     <th class="col-md-2 border">Tanggal Terima</th>
                     <th class="col-md-2 border">Jenis Kurir</th>
-                    <th class="col-md-2 border">Belum Dibayar</th>
+                    <th class="col-md-2 border">Nominal</th>
                     <th class="col-md border">Status</th>
                 </tr>
             </thead>
@@ -48,13 +48,19 @@
 
                             <td class="border">
 
-                                <?php if (empty($data_bayar['armada_ID']) && empty($data_bayar['received_date'])) { ?>
-                                    dalam antrian
-                                <?php } else if (!empty($data_bayar['armada_ID']) && empty($data_bayar['received_date'])) { ?>
-                                    dalam pengiriman
-                                <?php } else if (!empty($data_bayar['armada_ID']) && !empty($data_bayar['received_date'])) { ?>
-                                    selesai
-                                <?php } ?>
+                                <?php
+                                if (empty($pengiriman['armada_ID']) and empty($pengiriman['tanggal_diterima'])) {
+                                    echo 'dalam antrian';
+                                } else if (!empty($pengiriman['armada_ID']) and empty($pengiriman['tanggal_diterima'])) {
+                                    if ($pengiriman['hilang'] == '1') {
+                                        echo '<b class="text-danger">hilang</b>';
+                                    } else if ($pengiriman['hilang'] == '0') {
+                                        echo 'dalam pengiriman';
+                                    }
+                                } else if (!empty($pengiriman['armada_ID']) and !empty($pengiriman['tanggal_diterima'])) {
+                                    echo 'selesai';
+                                }
+                                ?>
 
                             </td>
                         </tr>

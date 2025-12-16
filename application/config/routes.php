@@ -101,6 +101,7 @@ $route['superadmin/kontrak-sopir/edit/(:any)'] = 'superadmin/kontrak_sopir_edit_
 $route['superadmin/kontrak-sopir/daftar/(:any)'] = 'superadmin/kontrak_sopir_detail_view/$1';
 
 $route['superadmin/kelola-tipe-kurir'] = 'superadmin/kelola_tipe_kurir';
+$route['superadmin/kelola-tipe-kurir/(:any)'] = 'superadmin/kelola_tipe_kurir/$1';
 $route['superadmin/kelola-tipe-kurir/edit'] = 'superadmin/ubah_tipe_kurir';
 $route['superadmin/kelola-tipe-kurir/hapus/(:any)'] = 'superadmin/hapus_tipe_kurir/$1';
 
@@ -122,6 +123,10 @@ $route['superadmin/admin-account-management'] = 'superadmin/admin_account_manage
 
 $route['superadmin/terima-kargo'] = 'superadmin/terima_kargo';
 $route['superadmin/kargo-hilang'] = 'superadmin/kargo_hilang';
+
+$route['superadmin/histori-perjalanan/(:any)'] = 'superadmin/history_jalan/$1';
+
+$route['superadmin/hapus_admin/(:any)'] = 'superadmin/hapus_admin/$1';
 
 /**
  * ==============================================================================================

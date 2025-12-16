@@ -800,8 +800,17 @@ class Superadmin extends MY_Controller
         } else {
             $id_pengiriman = $this->input->post('ID_pengiriman');
 
-            if ($this->Superadmin_Model->update_armada_kirim($id_pengiriman, $armada_id)) redirect('superadmin/proses-kirim/load/' . $id_armada_md5);
-            else $this->session->set_flashdata('error', 'Gagal tambah');
+            if (empty($this->Superadmin_Model->get_paket(md5($id_pengiriman)))) {
+                $this->session->set_flashdata('error', 'Kode Tidak Ditemukan');
+                redirect('superadmin/proses-kirim/load/' . $id_armada_md5);
+            }
+
+            if ($this->Superadmin_Model->update_armada_kirim($id_pengiriman, $armada_id)) {
+                redirect('superadmin/proses-kirim/load/' . $id_armada_md5);
+            } else {
+                $this->session->set_flashdata('error', 'Gagal tambah');
+                redirect('superadmin/proses-kirim/load/' . $id_armada_md5);
+            }
         }
     }
 
@@ -976,7 +985,7 @@ class Superadmin extends MY_Controller
         $config = $this->pagination_config;
         $config['base_url'] = base_url('superadmin/admin-account-management');
         $config['per_page'] = $this->per_page;
-        $config['total_rows'] = count($this->Superadmin_Model->get_tipekurir());
+        $config['total_rows'] = count($this->Superadmin_Model->all_admin());
 
         $this->pagination->initialize($config);
 
@@ -996,13 +1005,14 @@ class Superadmin extends MY_Controller
     {
         $NamaLengkap = $this->input->post('NamaLengkap');
         $email = $this->input->post('email');
+        $super = $this->input->post('super');
         $password = password_hash($email, PASSWORD_BCRYPT);
 
         $data_insert = [
             'NamaLengkap' => $NamaLengkap,
             'email' => $email,
             'password' => $password,
-            'is_super' => '0',
+            'is_super' => $super,
         ];
 
         if ($this->Superadmin_Model->new_admin($data_insert)) {
@@ -1130,7 +1140,7 @@ class Superadmin extends MY_Controller
         $condition = [
             'md5(ID)' => $id,
         ];
-        $this->db->delete('kategori_paket', $condition);
+        $this->db->update('kategori_paket', ['is_deactivate' => 1], $condition);
 
         if ($this->General_Model->aff_row() > 0) {
             $this->session->set_flashdata('succ', 'Berhasil');
@@ -1160,7 +1170,7 @@ class Superadmin extends MY_Controller
         $condition = [
             'md5(ID)' => $id,
         ];
-        $this->db->delete('tipe_kurir', $condition);
+        $this->db->update('tipe_kurir', ['deactivate' => 1], $condition);
 
         if ($this->General_Model->aff_row() > 0) {
             $this->session->set_flashdata('succ', 'Berhasil');
@@ -1175,7 +1185,7 @@ class Superadmin extends MY_Controller
         $condition = [
             'md5(ID)' => $id,
         ];
-        $this->db->delete('metode_pembayaran', $condition);
+        $this->db->update('metode_pembayaran', ['deactivate' => 1], $condition);
 
         if ($this->General_Model->aff_row() > 0) {
             $this->session->set_flashdata('succ', 'Berhasil');
@@ -1338,5 +1348,49 @@ class Superadmin extends MY_Controller
         $this->session->set_flashdata('id_armada' . $data['ID'], $data['ID']);
 
         redirect('superadmin/kelola-armada');
+    }
+
+    public function history_jalan($plat_nomor)
+    {
+        $get_val = $this->input->get('tgl');
+        
+        if (empty($get_val)) {
+            $armada_hist = $this->Superadmin_Model->histori_perjalanan($plat_nomor);
+        } else {
+            $armada_hist = $this->Superadmin_Model->histori_perjalanan($plat_nomor, $get_val);
+        }
+        
+        // Cek apakah $armada_hist kosong
+        $tgl_display = '';
+        if (!empty($armada_hist) && is_array($armada_hist) && isset($armada_hist[0]['created_at'])) {
+            $tgl_display = date('d M Y', strtotime($armada_hist[0]['created_at']));
+        }
+        
+        $data = [
+            'title' => 'Histori Perjalanan [' . $plat_nomor . ']',
+            'is_peta' => true,
+            'jsonData' => json_encode($armada_hist ?? []),
+            'armada' => $armada_hist ?? [],
+            'armada_data' => $this->Superadmin_Model->armada($plat_nomor),
+            'tgl' => $tgl_display,
+            'sort_tgl' => $this->Superadmin_Model->distinct_tgl_perjalanan($plat_nomor),
+        ];
+    
+        $this->load_template('superadmin/histori_jln', $data);
+    }
+
+    public function hapus_admin($id = '')
+    {
+        $condition = [
+            'md5(ID)' => $id,
+        ];
+        $this->db->delete('superadmin', $condition);
+
+        if ($this->General_Model->aff_row() > 0) {
+            $this->session->set_flashdata('succ', 'Berhasil');
+        } else {
+            $this->session->set_flashdata('message', 'Gagal, mohon coba lagi');
+        }
+        redirect('superadmin/admin-account-management');
     }
 }

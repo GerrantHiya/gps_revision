@@ -66,7 +66,7 @@
                             </td>
                             <td>
                                 <a href="<?= base_url('superadmin/kontrak-sopir/edit/') . md5($sopir['ID']) ?>" class="badge badge-warning">edit</a>
-                                <a href="" class="badge badge-danger">delete</a>
+                                <!--<a href="" class="badge badge-danger">delete</a>-->
                             </td>
                         </tr>
                     </section>
@@ -97,7 +97,7 @@
                 <div class="row mb-3">
                     <div class="col">
                         <label class="sr-only" for="NIK">NIK</label>
-                        <input maxlength="16" type="text" class="form-control rounded-0" id="NIK" name="NIK" placeholder="Nomor Induk Kependudukan (NIK)">
+                        <input maxlength="16" type="text" class="form-control rounded-0" id="NIK" name="NIK" required placeholder="Nomor Induk Kependudukan (NIK)">
                         <label id="nik-error" class="error-message">tidak valid, harus 16 digit</label>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                 <div class="row mb-3">
                     <div class="col">
                         <label class="sr-only" for="NamaLengkap">Nama Lengkap</label>
-                        <input type="text" class="form-control rounded-0" id="NamaLengkap" name="NamaLengkap" placeholder="Nama Lengkap">
+                        <input type="text" class="form-control rounded-0" id="NamaLengkap" name="NamaLengkap" required placeholder="Nama Lengkap">
                     </div>
                 </div>
 

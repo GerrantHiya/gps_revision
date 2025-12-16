@@ -145,17 +145,19 @@
         <tbody>
             <?php if (!empty($metode_bayar)) { ?>
                 <?php foreach ($metode_bayar as $metode) : ?>
-                    <tr>
-                        <td><?= $nomor++ ?></td> <!-- Nomor -->
-                        <td class="text-left"><?= $metode['metode'] ?> <?= $metode['is_card'] == 1 ? '(use card)' : '' ?></td>
-                        <td><?= $metode['bank'] ?? '-- tanpa bank --' ?></td>
-                        <td>
-                            <button type="button"
-                                onclick="fill('edit_ID', '<?= $metode['ID'] ?>'); fill('edit_nama', '<?= $metode['metode'] ?>'); fill('edit_bank', '<?= $metode['bank'] ?>'); fill('edit_is_card','<?= $metode['is_card'] ?>')"
-                                data-toggle="modal" data-target="#edit" class="badge badge-warning text-danger border-0">edit</button>
-                            <a href="<?= base_url('superadmin/kelola-metode-bayar/hapus/' . md5($metode['ID'])) ?>" class="badge badge-danger">delete</a>
-                        </td> <!-- Button -->
-                    </tr>
+                    <?php if ($metode['deactivate'] == 0) : ?>
+                        <tr>
+                            <td><?= $nomor++ ?></td> <!-- Nomor -->
+                            <td class="text-left"><?= $metode['metode'] ?> <?= $metode['is_card'] == 1 ? '(use card)' : '' ?></td>
+                            <td><?= $metode['bank'] ?? '-- tanpa bank --' ?></td>
+                            <td>
+                                <button type="button"
+                                    onclick="fill('edit_ID', '<?= $metode['ID'] ?>'); fill('edit_nama', '<?= $metode['metode'] ?>'); fill('edit_bank', '<?= $metode['bank'] ?>'); fill('edit_is_card','<?= $metode['is_card'] ?>')"
+                                    data-toggle="modal" data-target="#edit" class="badge badge-warning text-danger border-0">edit</button>
+                                <a href="<?= base_url('superadmin/kelola-metode-bayar/hapus/' . md5($metode['ID'])) ?>" class="badge badge-danger">delete</a>
+                            </td> <!-- Button -->
+                        </tr>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             <?php } else { ?>
                 <tr>

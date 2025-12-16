@@ -3,6 +3,8 @@
 application/cache/*
 !application/cache/index.html
 
+/old_61125/*
+
 application/logs/*
 !application/logs/index.html
 
@@ -15,12 +17,18 @@ user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
-/vendor/
+
 
 # IDE Files
 #-------------------------
 /nbproject/
 .idea/*
+
+*application_0811.zip
+*application_281125_old.zip
+*assets_281125_old.zip
+*final_destination_before_revision.zip
+*old_tak_tau_kapan.zip
 
 ## Sublime Text cache files
 *.tmlanguage.cache

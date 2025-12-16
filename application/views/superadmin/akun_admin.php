@@ -34,6 +34,18 @@
                 </div>
             </div>
 
+            <div class="row align-items-center mb-1">
+                <div class="col-md-2 mt-0">
+                    <label for="super"><strong>Super Admin</strong></label>
+                </div>
+                <div class="col-md">
+                    <select name="super" id="super" class="form-control">
+                        <option value="0">Tidak (ditambahkan sebagai admin)</option>
+                        <option value="1">Ya (ditambahkan sebagai super admin)</option>
+                    </select>
+                </div>
+            </div>
+            
             <hr class="mt-3">
 
             <div class="row mb-1 text-end">
@@ -78,7 +90,7 @@
                                 <td class="border"><?= $acc['email'] ?></td>
                                 <td class="border"><?= $acc['NamaLengkap'] ?></td>
                                 <td class="border">
-                                    <a href="<?= base_url('superadmin/hapus_admin') ?>" class="btn btn-danger">hapus</a>
+                                    <a href="<?= base_url('superadmin/hapus_admin/' . md5($acc['email'])) ?>" class="btn btn-danger">hapus</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

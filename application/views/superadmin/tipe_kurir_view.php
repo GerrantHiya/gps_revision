@@ -138,24 +138,26 @@
         <tbody>
             <?php if (!empty($list_tipekurir)) { ?>
                 <?php foreach ($list_tipekurir as $tipekurir) : ?>
-                    <tr>
-                        <td><?= $nomor++ ?></td> <!-- Nomor -->
-                        <td class=""><?= $tipekurir['tipe'] ?></td>
-                        <td class=""><?= $tipekurir['durasi_hari'] ?></td>
-                        <td class="">Rp.<?= $tipekurir['biaya_formatted'] ?></td> <!-- Harga -->
-                        <td class="">
-                            <button type="button"
-                                onclick="
+                    <?php if ($tipekurir['deactivate'] == 0) : ?>
+                        <tr>
+                            <td><?= $nomor++ ?></td> <!-- Nomor -->
+                            <td class=""><?= $tipekurir['tipe'] ?></td>
+                            <td class=""><?= $tipekurir['durasi_hari'] ?></td>
+                            <td class="">Rp.<?= $tipekurir['biaya_formatted'] ?></td> <!-- Harga -->
+                            <td class="">
+                                <button type="button"
+                                    onclick="
                                 fill('edit_ID', '<?= $tipekurir['ID'] ?>');
                                 fill('edit_tipe', '<?= $tipekurir['tipe'] ?>');
                                 fill('edit_durasi', '<?= $tipekurir['durasi_hari'] ?>');
                                 fill('edit_harga', '<?= $tipekurir['biaya'] ?>');
                                 fill('edit_harga_display', '<?= $tipekurir['biaya_formatted'] ?>');
                                 "
-                                data-toggle="modal" data-target="#ubah" class="badge border-0 badge-warning text-danger">edit</button>
-                            <a href="<?= base_url('superadmin/kelola-tipe-kurir/hapus/' . md5($tipekurir['ID'])) ?>" class="badge badge-danger">delete</a>
-                        </td> <!-- Button -->
-                    </tr>
+                                    data-toggle="modal" data-target="#ubah" class="badge border-0 badge-warning text-danger">edit</button>
+                                <a href="<?= base_url('superadmin/kelola-tipe-kurir/hapus/' . md5($tipekurir['ID'])) ?>" class="badge badge-danger">delete</a>
+                            </td> <!-- Button -->
+                        </tr>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             <?php } else { ?>
                 <tr>

@@ -537,4 +537,40 @@ class Superadmin_Model extends CI_Model
             return false;
         }
     }
+
+    public function histori_perjalanan($plat_nomor = '', $kapan = '')
+    {
+        $this->db->select(
+            'l.ID as ID, ' .
+                'a.ID as armada_ID, ' .
+                'l.created_at as created_at,' .
+                'a.plat_nomor as plat_nomor,' .
+                'l.longitude as longitude,' .
+                'l.latitude as latitude,' . 
+                'a.keterangan as keterangan'
+        );
+        $this->db->from('loc_hist l');
+        $this->db->join('armada a', 'l.armada_ID = a.ID');
+        $this->db->where('a.plat_nomor', $plat_nomor);
+        
+        if (empty($kapan)) {
+            $this->db->where('DATE(created_at)', date('Y-m-d'));
+        } else {
+            $this->db->where('DATE(created_at)', $kapan);
+        }
+
+        return $this->db->get()->result_array();
+    }
+    
+    public function distinct_tgl_perjalanan($plat_nomor = '')
+    {
+        $this->db->select(
+            'DISTINCT(DATE(l.created_at)) as tgl'
+        );
+        $this->db->from('loc_hist l');
+        $this->db->join('armada a', 'l.armada_ID = a.ID');
+        $this->db->where('a.plat_nomor', $plat_nomor);
+        
+        return $this->db->get()->result_array();
+    }
 }

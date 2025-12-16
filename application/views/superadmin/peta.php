@@ -2,6 +2,7 @@
     <div class="row">
         <div class="col">
             <a href="<?= base_url('superadmin/kelola-armada') ?>" class="badge badge-secondary mb-3">&laquo; kembali</a>
+            <a href="<?= base_url('superadmin/histori-perjalanan/') . $armada['plat_nomor'] ?>" class="badge badge-dark">histori perjalanan</a>
             <a href="<?= base_url('superadmin/kelola-armada/detail/') . $armada['plat_nomor'] ?>" class="badge badge-info">refresh</a>
         </div>
         <div class="col"></div>
@@ -33,7 +34,7 @@
 <script>
     var latitude = <?= $armada['latitude'] ?? 0 ?>;
     var longitude = <?= $armada['longitude'] ?? 0 ?>;
-    var zoom = 15;
+    var zoom = 18;
     var map = L.map('map').setView([latitude, longitude], zoom);
 
     // Gunakan tile dari OpenStreetMap (GRATIS)
@@ -47,4 +48,16 @@
     var marker = L.marker([latitude, longitude]).addTo(map)
         .bindPopup('Plat: <?= $armada['plat_nomor'] ?>')
         .openPopup();
+</script>
+
+<script>
+    // Fungsi untuk merefresh seluruh halaman (sama seperti menekan F5)
+    function autoRefresh() {
+        setInterval(() => {
+            location.reload();
+        }, 5000); // 5000 ms = 5 detik
+    }
+
+    // Panggil fungsi autoRefresh saat halaman dimuat
+    window.onload = autoRefresh;
 </script>
