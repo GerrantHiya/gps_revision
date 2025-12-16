@@ -494,6 +494,20 @@ class Superadmin_Model extends CI_Model
         }
     }
 
+    /**
+     * Get single report by ID
+     * @param int $id Report ID
+     * @return array|null Report data
+     */
+    public function get_report_by_id($id)
+    {
+        $this->db->select('*');
+        $this->db->from('monthly_report');
+        $this->db->where('ID', $id);
+
+        return $this->db->get()->row_array();
+    }
+
     public function update_armada_kirim($id_pengiriman = '', $id_armada = '')
     {
         $set = ['armada_ID' => $id_armada];

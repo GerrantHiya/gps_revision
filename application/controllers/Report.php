@@ -43,4 +43,44 @@ class Report extends MY_Controller
 
         redirect('superadmin/monthly-report');
     }
+
+    /**
+     * Export Monthly Report to PDF
+     * @param int $report_id ID of the report to export
+     */
+    public function export_pdf($report_id = '')
+    {
+        if (empty($report_id)) {
+            redirect('superadmin/monthly-report');
+        }
+
+        // Get report data
+        $report = $this->Superadmin_Model->get_report_by_id($report_id);
+
+        if (empty($report)) {
+            $this->session->set_flashdata('error', 'Laporan tidak ditemukan');
+            redirect('superadmin/monthly-report');
+        }
+
+        // Get month name
+        $month_names = [
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret',
+            4 => 'April', 5 => 'Mei', 6 => 'Juni',
+            7 => 'Juli', 8 => 'Agustus', 9 => 'September',
+            10 => 'Oktober', 11 => 'November', 12 => 'Desember'
+        ];
+        $month_name = $month_names[(int)$report['bulan']] ?? '';
+
+        $data = [
+            'report' => $report,
+            'month_name' => $month_name
+        ];
+
+        // Load PDF library and generate
+        $this->load->library('pdf');
+        $filename = 'Laporan_' . $month_name . '_' . $report['tahun'] . '.pdf';
+
+        $this->pdf->load('pdf/monthly_report_pdf', $data, 'A4', 'portrait')
+                  ->stream($filename, true);
+    }
 }

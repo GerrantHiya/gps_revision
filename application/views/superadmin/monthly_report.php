@@ -57,6 +57,7 @@
             <th colspan="2" class="border">Paket</th>
             <th class="col-sm-2 border bg-white" rowspan="2">Jumlah Customer</th>
             <th class="col-sm-1 border" rowspan="2">Created Date</th>
+            <th class="col-sm-1 border bg-white" rowspan="2">Aksi</th>
         </tr>
         <tr>
             <th class="border">Tarif Terbentuk</th>
@@ -82,6 +83,14 @@
                     <td class="border border-1"><?= $report['jml_paket_hilang'] ?></td>
                     <td class="border border-1 bg-white"><?= $report['ttl_customer'] ?></td>
 		            <td class="border border-1"><?= date('d-M-y', strtotime($report['created_at'])) ?></td>
+                    <td class="border border-1 bg-white">
+                        <a href="<?= base_url('report/export-pdf/' . $report['ID']) ?>" 
+                           class="btn btn-sm btn-primary" 
+                           title="Download PDF">
+                            <i class="fas fa-file-pdf"></i> PDF
+                        </a>
+                    </td>
+                </tr>
             <?php endforeach; ?>
         <?php } else { ?>
             <tr class="border bg-white">
@@ -90,10 +99,6 @@
         <?php } ?>
     </tbody>
 </table>
-
-<div class="text-center">
-    <button type="button" onclick="print()" class="btn btn-outline-primary">Download As PDF</button>
-</div>
 
 <style>
     th[rowspan] {

@@ -203,4 +203,37 @@ class Customer extends MY_Controller
 
         $this->load_template('customer/pricelist', $data);
     }
+
+    /**
+     * Download Invoice as PDF
+     * Only available for paid (lunas) invoices
+     * @param int $no_resi Receipt number
+     */
+    public function download_invoice($no_resi = '')
+    {
+        if (empty($no_resi)) {
+            $this->session->set_flashdata('error', 'No. Resi tidak valid');
+            redirect('customer/daftar-tagihan');
+        }
+
+        // Get invoice data with ownership validation
+        $invoice = $this->Customer_Model->get_invoice_data($no_resi, $this->user['ID']);
+
+        if (empty($invoice)) {
+            $this->session->set_flashdata('error', 'Invoice tidak ditemukan atau belum lunas');
+            redirect('customer/daftar-tagihan');
+        }
+
+        $data = [
+            'invoice' => $invoice
+        ];
+
+        // Load PDF library and generate
+        $this->load->library('pdf');
+        $filename = 'Invoice_' . $invoice['no_resi'] . '.pdf';
+
+        $this->pdf->load('pdf/customer_invoice_pdf', $data, 'A4', 'portrait')
+                  ->stream($filename, true);
+    }
 }
+

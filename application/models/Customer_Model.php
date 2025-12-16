@@ -98,4 +98,55 @@ class Customer_Model extends CI_Model
 
         return $this->db->get()->result_array();
     }
+
+    /**
+     * Get invoice data for PDF download
+     * Only returns data if the invoice is fully paid (lunas) and belongs to customer
+     * 
+     * @param int $no_resi Receipt number
+     * @param string $customer_id Customer ID for ownership validation
+     * @return array|null Invoice data or null if not found/not lunas/not owned
+     */
+    public function get_invoice_data($no_resi, $customer_id)
+    {
+        $this->db->select(
+            'pengiriman.ID AS no_resi, ' .
+            'pengiriman.sender_ID AS sender_id, ' .
+            'kategori_paket.Nama AS nama_kategori, ' .
+            'pengiriman.bobot AS bobot, ' .
+            'pengiriman.harga_total AS biaya_total, ' .
+            'pengiriman.sent_date AS tanggal_diserahkan, ' .
+            'pengiriman.received_date AS tanggal_diterima, ' .
+            'pengiriman.alamat_tujuan AS alamat_tujuan, ' .
+            'pengiriman.kota_tujuan AS kota_tujuan, ' .
+            'FORMAT(pengiriman.volume, 2) AS volume, ' .
+            'tipe_kurir.tipe AS tipe_kurir, ' .
+            'customer.NamaLengkap AS sender_name, ' .
+            'pengiriman.receiver_name AS nama_penerima, ' .
+            'IFNULL(bayar.total_bayar, 0) AS total_dibayar'
+        );
+        
+        $this->db->from('pengiriman');
+        $this->db->join('customer', 'customer.ID = pengiriman.sender_ID');
+        $this->db->join('kategori_paket', 'kategori_paket.ID = pengiriman.kategori_ID', 'left');
+        $this->db->join('tipe_kurir', 'tipe_kurir.ID = pengiriman.tipe_kurir', 'left');
+        $this->db->join(
+            '(SELECT id_pengiriman, SUM(jumlah_bayar) AS total_bayar FROM pembayaran GROUP BY id_pengiriman) AS bayar',
+            'bayar.id_pengiriman = pengiriman.ID',
+            'left'
+        );
+        
+        $this->db->where('pengiriman.ID', $no_resi);
+        $this->db->where('pengiriman.sender_ID', $customer_id);
+        
+        $result = $this->db->get()->row_array();
+        
+        // Check if lunas (total paid >= total cost)
+        if ($result && $result['total_dibayar'] >= $result['biaya_total']) {
+            return $result;
+        }
+        
+        return null;
+    }
 }
+

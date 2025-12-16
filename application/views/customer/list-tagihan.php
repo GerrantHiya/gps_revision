@@ -3,6 +3,15 @@
 <div class="card">
     <div class="card-body">
 
+        <?php if ($this->session->flashdata('error')) : ?>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <?= $this->session->flashdata('error') ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <?php endif; ?>
+
         <table class="table text-center mb-0">
             <thead>
                 <tr>
@@ -10,9 +19,10 @@
                     <th class="col-md-2 border">Kota Tujuan</th>
                     <th class="col-md-2 border">Tanggal Kirim</th>
                     <th class="col-md-2 border">Tanggal Terima</th>
-                    <th class="col-md-2 border">Jenis Kurir</th>
+                    <th class="col-md-1 border">Jenis Kurir</th>
                     <th class="col-md-2 border">Nominal</th>
-                    <th class="col-md border">Status</th>
+                    <th class="col-md-1 border">Status</th>
+                    <th class="col-md-1 border">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,7 +41,8 @@
 
                             <?php
                             $data_bayar = $this->Superadmin_Model->get_kargo_specific_by_id($pengiriman['no_resi']);
-                            if ($data_bayar['biaya_total_view'] > 0) { ?>
+                            $is_lunas = ($data_bayar['biaya_total_view'] <= 0);
+                            if (!$is_lunas) { ?>
 
                                 <td class="border">
                                     Tunggakan: <?= 'Rp.' . $data_bayar['biaya_total_view'] ?><br>
@@ -62,6 +73,18 @@
                                 }
                                 ?>
 
+                            </td>
+
+                            <td class="border">
+                                <?php if ($is_lunas) : ?>
+                                    <a href="<?= base_url('customer/download-invoice/' . $pengiriman['no_resi']) ?>" 
+                                       class="btn btn-sm btn-success" 
+                                       title="Download Invoice PDF">
+                                        <i class="fas fa-file-pdf"></i> Invoice
+                                    </a>
+                                <?php else : ?>
+                                    <span class="text-muted">-</span>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
